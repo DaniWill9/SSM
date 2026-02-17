@@ -20,9 +20,10 @@ class Ability {
 
 class Level {
   //Properties
-    //start
-    //build
-    //run
-    //gameover
+    //states
+      //start
+      //build
+      //run
+      //gameover
   //Methods
 }
