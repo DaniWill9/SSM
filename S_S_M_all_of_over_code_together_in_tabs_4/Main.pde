@@ -83,6 +83,7 @@ void mousePressed() {
     // Placing items in the world area
     else if (mouseX < width - sidePanelWidth) {
 
+      //Platform X and Platform Y 
       float px = constrain(mouseX, 0, worldWidth - 50);
       float py = constrain(mouseY, 0, worldHeight - 50);
     
