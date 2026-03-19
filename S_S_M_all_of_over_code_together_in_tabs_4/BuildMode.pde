@@ -14,6 +14,7 @@ void drawBuildMode() {
 
   drawBlocks();
 
+  // Draw start and finish platforms + flags
   drawStartFinish();
   
 // Shows a see through preview of the block or spike
@@ -42,19 +43,26 @@ void drawInventory() {
   text("Spike", width - 100, 195);
 }
 
+// DRAW BLOCKS + SPIKES
+// Shows everything already placed in the world 
 void drawBlocks() {
 
+  // Normal blocks
   for (Block b : onScreenBlocks) {
     b.display();
   }
-
+  // Spike blocks
   for (SpikeBlock s : spikeBlocks) {
     s.display();
   }
 }
 
+// DRAW PLACEMENT PREVIEW
+// Shows a transparent preview of the selected item
+// Follows the mouse inside the world area
 void drawPlacementPreview() {
 
+    // Only show preview in the world area
   if (mouseX < width - sidePanelWidth) {
    
     // Block preview
