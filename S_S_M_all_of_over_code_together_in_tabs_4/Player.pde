@@ -29,10 +29,10 @@ class Player {
   boolean arrowMode = false;
 
   // WASD keys for red player
-  char leftChar, rightChar, jumpChar;
+  char redLeft, redRight, redJump;
 
-  // Arrow key codes for blue player
-  int leftCode, rightCode, jumpCode;
+ // Arrow key codes for blue player
+  int blueLeft, blueRight, blueJump;
 
   // Starting position for respawning
   float startX, startY;
@@ -47,18 +47,18 @@ class Player {
     startY = sy;
 
     col = c;
- // Red player uses WASD
+// Red player uses WASD
     if (c == color(255, 0, 0)) {
-      leftChar = 'a';
-      rightChar = 'd';
-      jumpChar = 'w';
+      redLeft = 'a';
+      redRight = 'd';
+      redJump = 'w';
     }
- // Blue player uses arrow keys
+  // Blue player uses arrow keys
     else {
       arrowMode = true;
-      leftCode = LEFT;
-      rightCode = RIGHT;
-      jumpCode = UP;
+      blueLeft = LEFT;
+      blueRight = RIGHT;
+      blueJump = UP;
     }
   }
 
@@ -78,16 +78,16 @@ class Player {
   
     // WASD controls
     if (!arrowMode) {
-      leftPressed = keyDown[leftChar];
-      rightPressed = keyDown[rightChar];
-      jumpPressed = keyDown[jumpChar];
+      leftPressed = keyDown[redLeft];
+      rightPressed = keyDown[redRight];
+      jumpPressed = keyDown[redJump];
     }
    
-    // Arrow key controls
+      // Arrow key controls
     else {
-      leftPressed = keyDown[leftCode];
-      rightPressed = keyDown[rightCode];
-      jumpPressed = keyDown[jumpCode];
+      leftPressed = keyDown[blueLeft];
+      rightPressed = keyDown[blueRight];
+      jumpPressed = keyDown[blueJump];
     }
    
     // Move left or right
@@ -115,6 +115,7 @@ class Player {
   // Only checks vertical collisions to keep things simple
   void verticalCollide() {
     onGround = false;
+
     // Start platform collision
     if (x + w > startPlatform.x && x < startPlatform.x + startPlatform.w) {
       if (vy > 0 && y + h >= startPlatform.y && y + h <= startPlatform.y + startPlatform.h) {
