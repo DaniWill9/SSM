@@ -29,7 +29,7 @@ class Player {
   boolean arrowMode = false;
 
   // WASD keys for red player
-  char redLeft, redRight, redJump;
+  int redLeft, redRight, redJump;
 
  // Arrow key codes for blue player
   int blueLeft, blueRight, blueJump;
