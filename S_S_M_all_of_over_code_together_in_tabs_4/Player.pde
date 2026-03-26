@@ -69,6 +69,7 @@ class Player {
     applyPhysics(); // Adds gravity and moves the player based on speed
     verticalCollide(); // Stops the player from falling through platforms or blocks
     checkSpikeHit(); // If the player touches a spike, they return to the starting spot
+    checkPowerUps(); // Checks if player has picked up a power up
   } 
 
  // HANDLE INPUT
@@ -158,6 +159,23 @@ class Player {
         vy = 0;
       }
     }
+  }
+  
+  void checkPowerUps(){
+      for (int i = powerUps.size()-1; i >= 0; i--) {
+     
+      PowerUp p = powerUps.get(i);
+      
+        if(x + w > p.x - p.size/2
+          && x < p.x + p.size/2
+          && y + h > p.y - p.size/2 
+          && y <p.y + p.size/2) {
+            //speed boost
+            p.apply(this);
+            //pickup & remove
+            powerUps.remove(i);
+          }
+     }
   }
 
   // DRAW PLAYER

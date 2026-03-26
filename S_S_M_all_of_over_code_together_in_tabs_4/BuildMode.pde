@@ -13,7 +13,7 @@ void drawBuildMode() {
   drawInventory();
 
   drawBlocks();
-
+  
   // Draw start and finish platforms + flags
   drawStartFinish();
   
@@ -54,6 +54,9 @@ void drawBlocks() {
   // Spike blocks
   for (SpikeBlock s : spikeBlocks) {
     s.display();
+  }
+  for (PowerUp p: powerUps) {
+    p.displayPowerUp();
   }
 }
 

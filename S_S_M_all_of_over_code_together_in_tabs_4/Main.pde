@@ -15,6 +15,9 @@ int worldHeight = 520;
 ArrayList<Block> onScreenBlocks = new ArrayList<Block>();
 ArrayList<SpikeBlock> spikeBlocks = new ArrayList<SpikeBlock>();
 
+// Lists for all PowerUps
+ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+
 // What item is currently selected for placing
 boolean holdingBlock = false;
 boolean holdingSpike = false;
@@ -26,7 +29,7 @@ int sidePanelWidth = 200;
 
 //Window Size Settings
 void settings() {
-  size(1900, worldHeight);
+  size(1400, worldHeight);
 }
 // SETUP
 // Runs once and creates the start and finish platforms and both players
@@ -36,6 +39,10 @@ void setup() {
   // Players start at the starting spot with different colors
   redPlayer = new Player(startX, startY, color(255, 0, 0));
   bluePlayer = new Player(startX + 40, startY, color(0, 120, 255));
+  
+  // PowerUps
+  powerUps.add(new PowerUp(200,200));
+  powerUps.add(new BombPowerUp(350,200));
 }
 
 void draw() {
@@ -97,6 +104,10 @@ void mousePressed() {
       else if (holdingSpike) {
         spikeBlocks.add(new SpikeBlock(px, py));
         holdingSpike = false;
+      }
+    //place powerup
+      else {
+        powerUps.add(new PowerUp(px, py));
       }
     }
   }
