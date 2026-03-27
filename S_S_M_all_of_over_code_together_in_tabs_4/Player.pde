@@ -161,21 +161,22 @@ class Player {
     }
   }
   
+ // POWERUPS
+ // Detect collission and Apply Effect
   void checkPowerUps(){
-      for (int i = powerUps.size()-1; i >= 0; i--) {
-     
+    for (int i = powerUps.size()-1; i >= 0; i--) {
       PowerUp p = powerUps.get(i);
-      
+        
         if(x + w > p.x - p.size/2
           && x < p.x + p.size/2
           && y + h > p.y - p.size/2 
           && y <p.y + p.size/2) {
-            //speed boost
+            //apply effect
             p.apply(this);
             //pickup & remove
             powerUps.remove(i);
           }
-     }
+    }
   }
 
   // DRAW PLAYER

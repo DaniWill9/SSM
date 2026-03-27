@@ -13,6 +13,10 @@ void drawPlayMode() {
   for (SpikeBlock s : spikeBlocks) {
     s.display();
   }
+  
+  for (PowerUp p : powerUps) {
+    p.displayPowerUp();
+  }
 
   redPlayer.update();
 
@@ -21,6 +25,8 @@ void drawPlayMode() {
   redPlayer.drawPlayer();
 
   bluePlayer.drawPlayer();
+  
+  //checkPowerUp();
 
   checkFinishReached();
 

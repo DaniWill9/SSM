@@ -7,7 +7,7 @@ void saveLevel() {
     return;
   }
 
-  String[] data = new String[onScreenBlocks.size() + spikeBlocks.size()];
+  String[] data = new String[onScreenBlocks.size() + spikeBlocks.size() + powerUps.size()];
 
   int index = 0; 
 
@@ -18,6 +18,11 @@ void saveLevel() {
 
   for (SpikeBlock s : spikeBlocks) {
     data[index] = "S," + s.x + "," + s.y;
+    index++;
+  }
+
+  for (PowerUp p : powerUps) {
+    data [index] = "P," + p.x + "," + p.y;
     index++;
   }
 
@@ -42,6 +47,7 @@ void loadLevel() {
 
   onScreenBlocks.clear();
   spikeBlocks.clear();
+  powerUps.clear();
 
   for (String line : data) {
 
@@ -59,6 +65,11 @@ void loadLevel() {
         float x = float(parts[1]);
         float y = float(parts[2]);
         spikeBlocks.add(new SpikeBlock(x, y));
+      }
+      if (parts[0].equals("P")) {
+        float x = float (parts[1]);
+        float y = float(parts[2]);
+        powerUps.add(new PowerUp(x,y));
       }
     }
   }

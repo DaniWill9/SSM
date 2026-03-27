@@ -13,6 +13,7 @@ void drawBuildMode() {
   drawInventory();
 
   drawBlocks();
+ 
   
   // Draw start and finish platforms + flags
   drawStartFinish();
@@ -23,8 +24,8 @@ void drawBuildMode() {
 
   fill(0);
   textAlign(CENTER);
-  text("Press P to Play", width - 100, 300);
-  text("Press S to Save", width - 100, 330);
+  text("Press P to Play", width - 100, 360);
+  text("Press S to Save", width - 100, 390);
 }
 
 void drawInventory() {
@@ -41,6 +42,13 @@ void drawInventory() {
 
   fill(0);
   text("Spike", width - 100, 195);
+  
+  fill(0);
+  text ("Speed", width - 100, 255);
+  
+  fill(0);
+  text ("Bomb", width - 100, 310);
+  
 }
 
 // DRAW BLOCKS + SPIKES
@@ -55,7 +63,7 @@ void drawBlocks() {
   for (SpikeBlock s : spikeBlocks) {
     s.display();
   }
-  for (PowerUp p: powerUps) {
+  for (PowerUp p : powerUps) {
     p.displayPowerUp();
   }
 }
@@ -82,5 +90,20 @@ void drawPlacementPreview() {
         mouseX + 50, mouseY + 50 
       );
     }
+   // PowerUps preview
+   
+     if (holdingPowerUp) {
+       if (holdingSpeedPowerUp){
+         fill (240, 197, 24);
+         ellipse (mouseX,mouseY,10,10);
+       }
+       if (holdingBombPowerUp){
+         fill (134, 41, 27);
+         ellipse (mouseX,mouseY,10,10);
+       }
+     //ellipse(300,200,255,80);
+     //ellipse(mouseX, mouseY + 50, mouseX + 50, mouseY);
+     }
+    
   }
 }

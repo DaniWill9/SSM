@@ -21,6 +21,9 @@ ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 // What item is currently selected for placing
 boolean holdingBlock = false;
 boolean holdingSpike = false;
+boolean holdingPowerUp = false;
+boolean holdingSpeedPowerUp = false;
+boolean holdingBombPowerUp = false;
 
 int gameState = 0; // 0 = Start, 1 = Build, 2 = Play
 
@@ -40,9 +43,12 @@ void setup() {
   redPlayer = new Player(startX, startY, color(255, 0, 0));
   bluePlayer = new Player(startX + 40, startY, color(0, 120, 255));
   
-  // PowerUps
+  /*
+  //Testing PowerUps
   powerUps.add(new PowerUp(200,200));
+  powerUps.add(new SpeedPowerUp(200,200));
   powerUps.add(new BombPowerUp(350,200));
+  */
 }
 
 void draw() {
@@ -67,7 +73,7 @@ void draw() {
 void mousePressed() {
 
   if (gameState == 0) {
-    gameState = 1;
+    gameState = 1;  
     return;
   }
 
@@ -78,6 +84,7 @@ void mousePressed() {
 
       holdingBlock = true;
       holdingSpike = false;
+      holdingPowerUp =  false;
     }
     // Spike button
     else if (mouseX > width - 150 && mouseX < width - 50 &&
@@ -85,6 +92,25 @@ void mousePressed() {
 
       holdingSpike = true;
       holdingBlock = false;
+      holdingPowerUp =  false;
+    }
+     // POWERUPS buttons"
+     // for SpeedPowerUp
+    else if (mouseX > width - 150  && mouseX < width - 50 &&
+    mouseY > 190 && mouseY < 240) {
+      holdingPowerUp = true;
+      holdingSpeedPowerUp = true;
+      holdingBlock = false;
+      holdingSpike =  false;
+    }
+    //for BombPowerUp
+    
+    else if (mouseX > width - 150  && mouseX < width - 50 &&
+    mouseY > 190 && mouseY < 240) {
+      holdingPowerUp = true;
+      holdingSpeedPowerUp = true;
+      holdingBlock = false;
+      holdingSpike =  false;
     }
     
     // Placing items in the world area
@@ -105,9 +131,10 @@ void mousePressed() {
         spikeBlocks.add(new SpikeBlock(px, py));
         holdingSpike = false;
       }
-    //place powerup
-      else {
+    // Place powerup
+      else if (holdingPowerUp) {
         powerUps.add(new PowerUp(px, py));
+        holdingPowerUp = false;
       }
     }
   }

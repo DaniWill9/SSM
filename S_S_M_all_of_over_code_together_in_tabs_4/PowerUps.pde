@@ -1,3 +1,6 @@
+//POWERUPS CLASS
+//Handles abilites like speed, bombs to destroy blocks etc.
+
 class PowerUp {
   float x, y;
   float size = 20;
@@ -5,18 +8,20 @@ class PowerUp {
   PowerUp(float x, float y) {
     this.x = x;
     this.y = y;
-  }//end of Powerup params
+  }
 
   void displayPowerUp() {
-    fill (240, 197, 24); //yellow
+    fill (240, 197, 24); //default ability color: yellow
     ellipse (x, y, size, size);
   }
   
+  //this looks weird because it's empty, but it is here to auto-insert the needed child class
   void apply(Player player){
   //start loopiing through child classes
    }
-}//end class PowerUp
+}
 
+//SPEEDBOOST
 class SpeedPowerUp extends PowerUp {
   SpeedPowerUp (float x, float y){
     super (x,y);
@@ -28,22 +33,27 @@ class SpeedPowerUp extends PowerUp {
   }
   
   void apply(Player player){
-    player.moveSpeed += 2;
+    player.moveSpeed += 2; //how fast
   }
 }
 
+//BOMB POWERUP
+//When playe
 class BombPowerUp extends PowerUp {
   BombPowerUp (float x, float y) {
     super(x, y);
   }
   
   void displayPowerUp() {
-    fill (134, 41, 27); //dark-red
+    fill (134, 41, 27); // color of bomb: dark-red
+    stroke (255,0,0);
     ellipse (x, y, size, size);
+    
   }
   void apply(Player player) {
     float range = 100;
    
+   //looping backwards through blocks, it removes all blocks within a radius around the player 
     for (int i = onScreenBlocks.size()-1; i >=0; i--) {
       Block b= onScreenBlocks.get(i);
       float centerX = b.x + b.w/2;
