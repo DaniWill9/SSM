@@ -22,7 +22,7 @@ void setupStartFinish() {
   startPlatform = new Platform(50, 350, 150, 20);
 
   // Finish platform placed far to the right for a long level
-  finishPlatform = new Platform(startPlatform.x + 1470, 350, 150, 20);
+  finishPlatform = new Platform(startPlatform.x + 1070, 350, 150, 20);
 
   // Finish flag centered above its platform
   finishX = finishPlatform.x + finishPlatform.w/2;
