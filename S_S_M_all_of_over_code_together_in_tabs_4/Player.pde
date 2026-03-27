@@ -145,7 +145,7 @@ class Player {
     }
   }
 
-  // SPIKE COLLISION
+    // SPIKE COLLISION
     // If the player touches a spike they return to the starting spot
   void checkSpikeHit() {
     for (SpikeBlock s : spikeBlocks) {

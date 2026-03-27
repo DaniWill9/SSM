@@ -65,6 +65,8 @@ void drawBlocks() {
   }
   for (PowerUp p : powerUps) {
     p.displayPowerUp();
+    //p.displaySpeedPowerUp();
+   // p.displayBombPowerUp();
   }
 }
 

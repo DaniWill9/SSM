@@ -44,7 +44,7 @@ void setup() {
   bluePlayer = new Player(startX + 40, startY, color(0, 120, 255));
   
   /*
-  //Testing PowerUps
+  //To Test PowerUps Functionality
   powerUps.add(new PowerUp(200,200));
   powerUps.add(new SpeedPowerUp(200,200));
   powerUps.add(new BombPowerUp(350,200));

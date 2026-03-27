@@ -27,7 +27,7 @@ class SpeedPowerUp extends PowerUp {
     super (x,y);
    }
    
-  void displayPowerUp(){
+  void displaySpeedPowerUp(){
     fill (0,200,255);
     ellipse (x,y,size,size);
   }
@@ -44,7 +44,7 @@ class BombPowerUp extends PowerUp {
     super(x, y);
   }
   
-  void displayPowerUp() {
+  void displayBombPowerUp() {
     fill (134, 41, 27); // color of bomb: dark-red
     stroke (255,0,0);
     ellipse (x, y, size, size);

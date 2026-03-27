@@ -25,8 +25,6 @@ void drawPlayMode() {
   redPlayer.drawPlayer();
 
   bluePlayer.drawPlayer();
-  
-  //checkPowerUp();
 
   checkFinishReached();
 

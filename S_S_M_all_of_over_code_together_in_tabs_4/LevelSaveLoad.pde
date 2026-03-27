@@ -70,6 +70,8 @@ void loadLevel() {
         float x = float (parts[1]);
         float y = float(parts[2]);
         powerUps.add(new PowerUp(x,y));
+        powerUps.add(new SpeedPowerUp(x,y));
+        powerUps.add(new BombPowerUp(x,y));
       }
     }
   }
