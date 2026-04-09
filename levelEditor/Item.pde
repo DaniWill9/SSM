@@ -14,7 +14,6 @@ class Item {
   
   // Methods
   void display() {
-    for (frameCount == 
     if (key == 's') {
       c = #0078FF;
     } else {
