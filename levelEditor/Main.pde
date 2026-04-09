@@ -134,7 +134,8 @@ void mousePressed() {
     // Place powerup
       else if (holdingPowerUp) {
         powerUps.add(new PowerUp(px, py));
-        holdingPowerUp = false;
+        BombPowerUp.add(new BombPowerUp(px,py));
+        holdingPowerUp = false; 
       }
     }
   }

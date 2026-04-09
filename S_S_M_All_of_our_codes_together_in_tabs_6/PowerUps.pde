@@ -10,47 +10,52 @@ class PowerUp {
     this.x = x;
     this.y = y;
   }
-
-  void displayPowerUp() {
-    fill (240, 197, 24); //default ability color: yellow
-    ellipse (x, y, size, size);
+  void display() {
+    fill(240, 197, 24); // color of powerup: yellow
+    ellipse(x, y, size, size);
   }
-  
+ 
   //this looks weird because it's empty, but it is here to auto-insert the needed child class
   void apply(Player player){
   //start loopiing through child classes
    }
 }
 
+//POWERUP SUBCLASSES
 //SPEEDBOOST
+//when players step on it, it increases their speed for a short duration
 class SpeedPowerUp extends PowerUp {
+  //timer set to 10s
+  int duration = 600; // if 60 fps = 600 frames
+  int speedTimer = duration; //sets the timer to the duration when applied
+  
   SpeedPowerUp (float x, float y){
     super (x,y);
    }
    
-  void displaySpeedPowerUp(){
+  void display(){
     fill (0,200,255);
     ellipse (x,y,size,size);
   }
   
   void apply(Player player){
-    player.moveSpeed += 2; //how fast
+    player.moveSpeed += 2; //how fast the speed boost is
   }
 }
 
 //BOMB POWERUP
-//When playe
+//When players step on it, it destroys all blocks in a certain radius around them
 class BombPowerUp extends PowerUp {
   BombPowerUp (float x, float y) {
     super(x, y);
   }
   
-  void displayBombPowerUp() {
+  void display() {
     fill (134, 41, 27); // color of bomb: dark-red
     stroke (255,0,0);
     ellipse (x, y, size, size);
-    
   }
+
   void apply(Player player) {
     float range = 100;
    
@@ -63,6 +68,6 @@ class BombPowerUp extends PowerUp {
       if (dist (player.x,player.y,centerX,centerY) < range){
         onScreenBlocks.remove(i);
       }
-    }
+    }  
   }
 }

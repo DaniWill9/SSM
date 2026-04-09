@@ -16,7 +16,7 @@ class PowerUp {
   }
   
   //this looks weird because it's empty, but it is here to auto-insert the needed child class
-  void apply(Player player){
+  void apply(Player player){ 
   //start loopiing through child classes
    }
 }
