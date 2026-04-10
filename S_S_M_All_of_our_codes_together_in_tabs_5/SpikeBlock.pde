@@ -1,4 +1,3 @@
-
   //SPIKE BLOCK
   // Touching it resets the player
 

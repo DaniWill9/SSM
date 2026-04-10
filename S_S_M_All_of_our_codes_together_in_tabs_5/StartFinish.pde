@@ -1,4 +1,3 @@
-
 // START & FINISH SYSTEM
 // This creates the start area finish area and the flags for both players
 

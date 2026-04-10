@@ -1,4 +1,3 @@
-
 //POWERUPS CLASS
 //Handles abilites like speed, bombs to destroy blocks etc.
 

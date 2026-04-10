@@ -1,4 +1,3 @@
-
 // MAIN GAME FILE
 
 // Tracks which keys are held down for both players to keep movement smoother
@@ -27,7 +26,6 @@ boolean holdingSpeedPowerUp = false;
 boolean holdingBombPowerUp = false;
 
 int gameState = 0; // 0 = Start, 1 = Build, 2 = Play
-
 
 int sidePanelWidth = 200;
 

@@ -1,4 +1,3 @@
-
 // PLAYER CLASS
 // Handles movement jumping gravity collisions and spike resets for each player
 class Player {
@@ -18,8 +17,6 @@ class Player {
   float jumpPower = -10; // jump strength
   float gravity = 0.5;   // falling speed
 
-
-  
     // True when the player is standing on something
   boolean onGround = false;
 
@@ -134,17 +131,38 @@ class Player {
         onGround = true;
       }
     }
-        // Block collision
-    for (Block b : onScreenBlocks) {
-      if (x + w > b.x && x < b.x + b.w) {
-        if (vy > 0 && y + h >= b.y && y + h <= b.y + b.h) {
-          y = b.y - h;
-          vy = 0;
-          onGround = true;
-        }
-      }
+     
+      // FULL BLOCK COLLISION (solid block)
+for (Block b : onScreenBlocks) {
+  
+  // Check if player overlaps block
+  if (x + w > b.x && x < b.x + b.w &&
+      y + h > b.y && y < b.y + b.h) {
+
+    // From top
+    if (vy > 0 && y + h - vy <= b.y) {
+      y = b.y - h;
+      vy = 0;
+      onGround = true;
     }
+    // From bottom
+    else if (vy < 0 && y - vy >= b.y + b.h) {
+      y = b.y + b.h;
+      vy = 0;
+    }
+    // From left
+    else if (vx > 0 && x + w - vx <= b.x) {
+      x = b.x - w;
+      vx = 0;
+    }
+    // From right
+    else if (vx < 0 && x - vx >= b.x + b.w) {
+      x = b.x + b.w;
+      vx = 0;
+    }
+   }
   }
+ }
 
     // SPIKE COLLISION
     // If the player touches a spike they return to the starting spot
