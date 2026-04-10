@@ -101,6 +101,7 @@ void mousePressed() {
     mouseY > 190 && mouseY < 240) {
       holdingPowerUp = true;
       holdingSpeedPowerUp = true;
+      holdingBombPowerUp = false;
       holdingBlock = false;
       holdingSpike =  false;
     }
@@ -109,7 +110,8 @@ void mousePressed() {
     else if (mouseX > width - 150  && mouseX < width - 50 &&
     mouseY > 190 && mouseY < 240) {
       holdingPowerUp = true;
-      holdingSpeedPowerUp = true;
+      holdingBombPowerUp = true;
+      holdingSpeedPowerUp = false;
       holdingBlock = false;
       holdingSpike =  false;
     }
@@ -134,8 +136,15 @@ void mousePressed() {
       }
     // Place powerup
       else if (holdingPowerUp) {
-        powerUps.add(new PowerUp(px, py));
-        holdingPowerUp = false;
+        if (holdingSpeedPowerUp) {
+          powerUps.add(new SpeedPowerUp(px, py));
+        }
+        else if (holdingBombPowerUp) {
+          powerUps.add(new BombPowerUp(px, py));
+        }
+          holdingPowerUp = false;
+          holdingBombPowerUp = false;
+          holdingSpeedPowerUp = false;
       }
     }
   }

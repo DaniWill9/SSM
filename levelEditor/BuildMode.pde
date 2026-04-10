@@ -1,4 +1,4 @@
-// BUILD MODE
+  // BUILD MODE
 // This screen is used for placing blocks and spikes before testing the level
 void drawBuildMode() {
 

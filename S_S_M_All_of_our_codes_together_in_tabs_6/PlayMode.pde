@@ -16,7 +16,7 @@ void drawPlayMode() {
   }
   
   for (PowerUp p : powerUps) {
-    p.displayPowerUp();
+    p.display();
   }
 
   redPlayer.update();
