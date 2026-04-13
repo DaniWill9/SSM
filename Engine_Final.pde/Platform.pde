@@ -1,4 +1,3 @@
-
 // PLATFORM CLASS
 // Simple platform used for start/finish areas or ground
 
