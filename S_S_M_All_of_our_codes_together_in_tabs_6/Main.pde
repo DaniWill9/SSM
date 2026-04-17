@@ -41,15 +41,8 @@ void setup() {
   setupStartFinish();
   
   // Players start at the starting spot with different colors
-  redPlayer = new Player(startX, startY, color(255, 0, 0));
-  bluePlayer = new Player(startX + 40, startY, color(0, 120, 255));
-  
-  /*
-  //To Test PowerUps Functionality
-  powerUps.add(new PowerUp(200,200));
-  powerUps.add(new SpeedPowerUp(200,200));
-  powerUps.add(new BombPowerUp(350,200));
-  */
+  redPlayer = new Player(startX, startY, color(255, 0, 0),worldHeight);
+  bluePlayer = new Player(startX + 40, startY, color(0, 120, 255),worldHeight);
 }
 
 void draw() {

@@ -18,8 +18,6 @@ class Player {
   float jumpPower = -10; // jump strength
   float gravity = 0.5;   // falling speed
 
-
-  
     // True when the player is standing on something
   boolean onGround = false;
 
@@ -38,16 +36,19 @@ class Player {
   // Starting position for respawning
   float startX, startY;
 
+  // y level detector for player death
+  int levelHeight;
+
   // Sets starting position, color, and control scheme
-  Player(float sx, float sy, int c) {
+  Player(float sx, float sy, int c, int lH) {
     x = sx;
     y = sy;
-  
   // Save start position
     startX = sx;
     startY = sy;
-
     col = c;
+    this.levelHeight = lH;
+
 // Red player uses WASD
     if (c == color(255, 0, 0)) {
       redLeft = 'a';
@@ -71,6 +72,7 @@ class Player {
     verticalCollide(); // Stops the player from falling through platforms or blocks
     checkSpikeHit(); // If the player touches a spike, they return to the starting spot
     checkPowerUps(); // Checks if player has picked up a power up
+    checkWorldVoid();// Checks if the player has gone below allowed Y level
   } 
 
  // HANDLE INPUT
@@ -154,14 +156,24 @@ class Player {
           y + h > s.y && y < s.y + s.h) {
        
         // Reset to start
-        x = startX;
-        y = startY;
-        vx = 0;
-        vy = 0;
+        death(); 
       }
     }
   }
-  
+  // checks for Y level where play-world ends and death happens
+  void checkWorldVoid() {
+    if (y > levelHeight) {
+      death();
+    }
+  }
+  // on player death
+  void death(){
+    x = startX;
+    y = startY;
+    vx = 0;
+    vy = 0;
+  }
+
  // POWERUPS
  // Detect collission and Apply Effect
   void checkPowerUps(){
