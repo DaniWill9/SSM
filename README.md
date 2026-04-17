@@ -1,7 +1,7 @@
 
 # S.S.M Game Engine Documentation
 
-## Created: (Spazing Spades Minorities) - S.S.M
+## Created: (Spazzing Spades Minorities) - S.S.M
 
 Overview: 
 This game is a two-player platformer built in Processing. Players can build levels, place traps and power-ups, and race to reach the finish flag. Each time a player reaches the finish, their score boxes fill with color. When all four boxes are filled, the game shows a win screen and loops back to the start for replay.
