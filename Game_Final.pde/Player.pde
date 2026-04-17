@@ -1,4 +1,3 @@
-
 // PLAYER CLASS
 // Handles movement jumping gravity collisions and spike resets for each player
 class Player {
@@ -13,11 +12,14 @@ class Player {
   float vx = 0;  
   float vy = 0; 
 
-// Players movement settings such as speed, jump strength, and gravity
+// Handles movement, jumping, and gravity for each player
+// Keeps motion smooth and simple for testing
   float moveSpeed = 4;   // walking speed
   float jumpPower = -10; // jump strength
   float gravity = 0.5;   // falling speed
 
+
+  
     // True when the player is standing on something
   boolean onGround = false;
 
@@ -36,19 +38,16 @@ class Player {
   // Starting position for respawning
   float startX, startY;
 
-  // y level detector for player death
-  int levelHeight;
-
   // Sets starting position, color, and control scheme
-  Player(float sx, float sy, int c, int lH) {
+  Player(float sx, float sy, int c) {
     x = sx;
     y = sy;
+  
   // Save start position
     startX = sx;
     startY = sy;
-    col = c;
-    this.levelHeight = lH;
 
+    col = c;
 // Red player uses WASD
     if (c == color(255, 0, 0)) {
       redLeft = 'a';
@@ -72,7 +71,6 @@ class Player {
     verticalCollide(); // Stops the player from falling through platforms or blocks
     checkSpikeHit(); // If the player touches a spike, they return to the starting spot
     checkPowerUps(); // Checks if player has picked up a power up
-    checkWorldVoid();// Checks if the player has gone below allowed Y level
   } 
 
  // HANDLE INPUT
@@ -107,7 +105,7 @@ class Player {
   }
 
 // APPLY PHYSICS
-  // Adds gravity and moves the player based on speed 
+  // Adds gravity and moves player based on speed
   void applyPhysics() {
     vy += gravity; // falling
     x += vx;       // horizontal move
@@ -136,17 +134,36 @@ class Player {
         onGround = true;
       }
     }
-        // Block collision
-    for (Block b : onScreenBlocks) {
-      if (x + w > b.x && x < b.x + b.w) {
-        if (vy > 0 && y + h >= b.y && y + h <= b.y + b.h) {
-          y = b.y - h;
-          vy = 0;
-          onGround = true;
-        }
+  for (Block b : onScreenBlocks) {
+    
+    // Check if player overlaps block
+    if (x + w > b.x && x < b.x + b.w &&
+        y + h > b.y && y < b.y + b.h) {
+  
+      // From top
+      if (vy > 0 && y + h - vy <= b.y) {
+        y = b.y - h;
+        vy = 0;
+        onGround = true;
       }
+      // From bottom
+      else if (vy < 0 && y - vy >= b.y + b.h) {
+        y = b.y + b.h;
+        vy = 0;
+      }
+      // From left
+      else if (vx > 0 && x + w - vx <= b.x) {
+        x = b.x - w;
+        vx = 0;
+      }
+      // From right 
+      else if (vx < 0 && x - vx >= b.x + b.w) {
+        x = b.x + b.w;
+        vx = 0;
+      }
+     }
     }
-  }
+   }
 
     // SPIKE COLLISION
     // If the player touches a spike they return to the starting spot
@@ -156,24 +173,14 @@ class Player {
           y + h > s.y && y < s.y + s.h) {
        
         // Reset to start
-        death(); 
+        x = startX;
+        y = startY;
+        vx = 0;
+        vy = 0;
       }
     }
   }
-  // checks for Y level where play-world ends and death happens
-  void checkWorldVoid() {
-    if (y > levelHeight) {
-      death();
-    }
-  }
-  // on player death
-  void death(){
-    x = startX;
-    y = startY;
-    vx = 0;
-    vy = 0;
-  }
-
+  
  // POWERUPS
  // Detect collission and Apply Effect
   void checkPowerUps(){

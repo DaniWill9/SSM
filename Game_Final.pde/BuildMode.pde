@@ -1,4 +1,3 @@
-
 // BUILD MODE
 // This screen is used for placing blocks and spikes before testing the level
 void drawBuildMode() {
@@ -15,41 +14,79 @@ void drawBuildMode() {
 
   drawBlocks();
  
-  
   // Draw start and finish platforms + flags
   drawStartFinish();
   
 // Shows a see through preview of the block or spike
 // This helps the player see where the item will go before placing it
   drawPlacementPreview();
+  
+  // Draw score boxes only in Build Mode
+  drawScoreBoxes();
 
   fill(0);
   textAlign(CENTER);
+  textSize(24); 
   text("Press P to Play", width - 100, 360);
   text("Press S to Save", width - 100, 390);
 }
 
+// SCORE BOXES
+// Creates four empty boxes for each player at the top of the screen
+// When a player reaches the finish, their boxes fill with color
+// Red boxes fill for the red player and blue boxes fill for the blue player
+// Once all four boxes are filled, it triggers the win screen
+void drawScoreBoxes() {
+  
+  // Red side boxes (top left) can also set the amount by changing the 4
+  for (int i = 0; i < 4; i++) {
+    fill(255); // empty box
+    rect(20 + i * 40, 20, 30, 30);
+  }
+  // Fill boxes for red players points
+  for (int i = 0; i < redScore; i++) {
+    fill(255, 0, 0);
+    rect(20 + i * 40, 20, 30, 30);
+  }
+
+  // Blue side boxes (top right) can also set the amount by changing the 4
+  for (int i = 0; i < 4; i++) {
+    fill(255);
+    rect(width - 160 + i * 40, 20, 30, 30);
+  }
+  // Fill boxes for blue players points
+  for (int i = 0; i < blueScore; i++) {
+    fill(0, 120, 255);
+    rect(width - 160 + i * 40, 20, 30, 30);
+  }
+}
+
+
 void drawInventory() {
+  
   //block button
   fill(100, 200, 100);
   rect(width - 150, 100, 100, 50);
 
   fill(0);
-  textAlign(CENTER, CENTER);
-  text("Block", width - 100, 125);
+  textSize(25);     
+  text("Block", width - 100, 135);
 
   //spike button
   fill(200, 80, 80);
   rect(width - 150, 170, 100, 50);
 
   fill(0);
-  text("Spike", width - 100, 195);
+  textSize(25); 
+  text("Spike", width - 100, 205);
 
   // Speed Button
-  fill(0,200,255);
+  fill(240, 197, 24);
   circle(width - 100, 255, 30);
+  
   fill (0);
-  text ("Speed", width - 100, 255);
+  textSize(20); 
+  text ("Speed", width - 100, 260);
 
   if (dist(mouseX, mouseY, width - 100, 255) < 15) {
    holdingPowerUp = true;
@@ -60,8 +97,10 @@ void drawInventory() {
   // Bomb Button
   fill(134, 41, 27);
   circle(width - 100, 310, 30);
+  
   fill(0);
-  text ("Bomb", width - 100, 310);
+  textSize(20); 
+  text ("Bomb", width - 100, 315);
 
   if (dist(mouseX, mouseY, width - 100, 310) < 15) {
     holdingPowerUp = true;
@@ -90,8 +129,8 @@ void drawBlocks() {
 }
 
 // DRAW PLACEMENT PREVIEW
-// Shows a transparent preview of the selected item
-// Follows the mouse inside the world area
+// Shows a see through preview of blocks, spikes, and powerups
+// Helps the player see where an item will go before placing it
 void drawPlacementPreview() {
 
     // Only show preview in the world area
@@ -115,7 +154,7 @@ void drawPlacementPreview() {
    // PowerUps preview
    // Speed PowerUp preview
     if (holdingSpeedPowerUp) {
-      fill(0,200,255);  
+      fill(240, 197, 24, 120);  
       ellipse(mouseX, mouseY, 20, 20);
     }
     
