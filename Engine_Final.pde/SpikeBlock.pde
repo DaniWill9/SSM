@@ -16,8 +16,8 @@ class SpikeBlock {
     this.y = y;   // Y position
   }
 
-  // DISPLAY SPIKE
-  // Draws a red triangle to show danger
+ // Draws a red triangle to show danger clearly
+// Used as a trap that resets the player when touched
   void display() {
     fill(200, 50, 50);  // red color
 

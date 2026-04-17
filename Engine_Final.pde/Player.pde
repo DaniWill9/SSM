@@ -1,4 +1,3 @@
-
 // PLAYER CLASS
 // Handles movement jumping gravity collisions and spike resets for each player
 class Player {
@@ -13,7 +12,8 @@ class Player {
   float vx = 0;  
   float vy = 0; 
 
-// Players movement settings such as speed, jump strength, and gravity
+// Handles movement, jumping, and gravity for each player
+// Keeps motion smooth and simple for testing
   float moveSpeed = 4;   // walking speed
   float jumpPower = -10; // jump strength
   float gravity = 0.5;   // falling speed
@@ -105,7 +105,7 @@ class Player {
   }
 
 // APPLY PHYSICS
-  // Adds gravity and moves the player based on speed 
+  // Adds gravity and moves player based on speed
   void applyPhysics() {
     vy += gravity; // falling
     x += vx;       // horizontal move
@@ -156,7 +156,7 @@ class Player {
         x = b.x - w;
         vx = 0;
       }
-      // From right
+      // From right 
       else if (vx < 0 && x - vx >= b.x + b.w) {
         x = b.x + b.w;
         vx = 0;

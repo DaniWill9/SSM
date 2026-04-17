@@ -1,5 +1,6 @@
 // SAVE & LOAD SYSTEM
-
+// Saves all blocks, spikes, and powerups into a file
+// Helps keep the level setup for later testing
 void saveLevel() {
 
   if (onScreenBlocks.size() == 0 && spikeBlocks.size() == 0) {
@@ -11,16 +12,19 @@ void saveLevel() {
 
   int index = 0; 
 
+  // Saves block positions
   for (Block b : onScreenBlocks) {
     data[index] = "B," + b.x + "," + b.y;
     index++;
   }
 
+  // Saves spike positions
   for (SpikeBlock s : spikeBlocks) {
     data[index] = "S," + s.x + "," + s.y;
     index++;
   }
 
+  // Saves powerups positions
   for (PowerUp p : powerUps) {
     data [index] = "P," + p.x + "," + p.y;
     index++;
@@ -34,6 +38,8 @@ void saveLevel() {
   println("Saved to: " + fullPath);
 }
 
+// Loads saved blocks, spikes, and powerups from file
+// Clears old ones and rebuilds them in the level
 void loadLevel() {
 
   String fullPath = dataPath("savedState.txt");
