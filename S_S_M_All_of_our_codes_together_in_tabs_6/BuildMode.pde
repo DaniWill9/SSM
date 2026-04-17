@@ -46,7 +46,7 @@ void drawInventory() {
   text("Spike", width - 100, 195);
 
   // Speed Button
-  fill(240, 197, 24);
+  fill(0,200,255);
   circle(width - 100, 255, 30);
   fill (0);
   text ("Speed", width - 100, 255);
@@ -115,7 +115,7 @@ void drawPlacementPreview() {
    // PowerUps preview
    // Speed PowerUp preview
     if (holdingSpeedPowerUp) {
-      fill(240, 197, 24, 120);  
+      fill(0,200,255);  
       ellipse(mouseX, mouseY, 20, 20);
     }
     
