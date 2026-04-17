@@ -52,8 +52,9 @@ void setup() {
   setupStartFinish();
   
   // Red and blue players start next to each other on the platform
-  redPlayer = new Player(startX, startY, color(255, 0, 0));
-  bluePlayer = new Player(startX + 40, startY, color(0, 120, 255));
+  redPlayer = new Player(startX, startY, color(255, 0, 0), worldHeight);
+  bluePlayer = new Player(startX + 40, startY, color(0, 120, 255), worldHeight);
+
   
   /*
   //To Test PowerUps Functionality
