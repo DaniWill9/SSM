@@ -1,7 +1,7 @@
-
 //POWERUPS CLASS
-//Handles abilites like speed, bombs to destroy blocks etc.
-
+//Handles abilites like speed, bombs to destroy blocks etc
+// PowerUp base class used for items that give effects
+// Keeps things simple so new types can be added easily
 class PowerUp {
   float x, y;
   float size = 20;
@@ -10,6 +10,8 @@ class PowerUp {
     this.x = x;
     this.y = y;
   }
+  
+  // Draws the powerup as a small circle
   void display() {
     fill(240, 197, 24); // color of powerup: yellow
     ellipse(x, y, size, size);
@@ -17,7 +19,7 @@ class PowerUp {
  
   //this looks weird because it's empty, but it is here to auto-insert the needed child class
   void apply(Player player){
-  //start loopiing through child classes
+// Base powerup does nothing yet, player is passed for child classes
    }
 }
 
