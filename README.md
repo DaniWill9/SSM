@@ -33,16 +33,16 @@ Platform(float px, float py, float pw, float ph)
 Creates a platform at position (px, py) with width pw and height ph.
 
 **Fields**<br>
-float x — X position of the platform
-float y — Y position of the platform
-float w — Width of the platform
-float h — Height of the platform
+float x — X position of the platform<br>
+float y — Y position of the platform<br>
+float w — Width of the platform<br>
+float h — Height of the platform<br>
 
 **Parameters**<br>
-px — X coordinate of the platform
-py — Y coordinate of the platform
-pw — Width of the platform
-ph — Height of the platform
+px — X coordinate of the platform<br>
+py — Y coordinate of the platform<br>
+pw — Width of the platform<br>
+ph — Height of the platform<br>
 
 **Methods**<br>
 drawPlatform() — Draws the platform as a black rectangle.
@@ -61,16 +61,16 @@ Block(float x, float y, int r, int g, int b)
 Creates a block at (x, y) with color (r, g, b)
 
 **Fields**<br>
-float x, y — Position of the block
-float w, h — Width and height of the block
-int r, g, b — Color components of the block
+float x, y — Position of the block<br>
+float w, h — Width and height of the block<br>
+int r, g, b — Color components of the block<br>
 
 **Parameters**<br>
-x — X coordinate
-y — Y coordinate
-r — Red color value
-g — Green color value
-b — Blue color value
+x — X coordinate<br>
+y — Y coordinate<br>
+r — Red color value<br>
+g — Green color value<br>
+b — Blue color value<br>
 
 **Methods**<br>
 display() — Draws the block as a colored rectangle.
@@ -89,12 +89,12 @@ SpikeBlock(float x, float y)
 Creates a spike block at (x, y)
 
 **Fields**<br>
-float x, y — Position of the spike
-float w, h — Size of the spike
+float x, y — Position of the spike<br>
+float w, h — Size of the spike<br>
 
 **Parameters**<br>
-x — X coordinate
-y — Y coordinate
+x — X coordinate<br>
+y — Y coordinate<br>
 
 **Methods**<br>
 display() — Draws a red triangle representing the spike
@@ -114,30 +114,30 @@ redPlayer.drawPlayer();
 Player(float sx, float sy, int c, int lH) — Creates a player at (sx, sy) with color c and sets the level height limit lH.
 
 **Fields**<br>
-float x, y — Player position
-float w, h — Player size
-float vx, vy — Player velocity
-float moveSpeed, jumpPower, gravity — Movement settings
-boolean onGround — True if player is standing on something
-int col — Player color
-boolean arrowMode — True if using arrow keys
-int levelHeight — Detects when the player falls below the playable area
+float x, y — Player position<br>
+float w, h — Player size<br>
+float vx, vy — Player velocity<br>
+float moveSpeed, jumpPower, gravity — Movement settings<br>
+boolean onGround — True if player is standing on something<br>
+int col — Player color<br>
+boolean arrowMode — True if using arrow keys<br>
+int levelHeight — Detects when the player falls below the playable area<br>
 
 **Parameters**<br>
-sx — Starting X position
-sy — Starting Y position
-c — Player color
+sx — Starting X position<br>
+sy — Starting Y position<br>
+c — Player color<br>
 
 **Methods**<br>
-update() — Runs input, physics, collisions, and power-up checks
-handleInput() — Reads key presses for movement and jumping
-applyPhysics() — Applies gravity and moves the player
-verticalCollide() — Prevents falling through platforms
-checkSpikeHit() — Resets player when touching spikes
-checkPowerUps() — Detects and applies power-up effects
-drawPlayer() — Draws the player as a rectangle
-checkWorldVoid() — Checks if the player’s Y position goes below the level height and resets them to the start
-death() — Resets the player’s position and velocity after falling off or touching spikes
+update() — Runs input, physics, collisions, and power-up checks<br>
+handleInput() — Reads key presses for movement and jumping<br>
+applyPhysics() — Applies gravity and moves the player<br>
+verticalCollide() — Prevents falling through platforms<br>
+checkSpikeHit() — Resets player when touching spikes<br>
+checkPowerUps() — Detects and applies power-up effects<br>
+drawPlayer() — Draws the player as a rectangle<br>
+checkWorldVoid() — Checks if the player’s Y position goes below the level height and resets them to the start<br>
+death() — Resets the player’s position and velocity after falling off or touching spikes<br>
 
 ## StartFinish Class
 
@@ -161,11 +161,11 @@ Parameters
 (Used in setup functions rather than constructors.)
 
 **Methods**<br>
-setupStartFinish() — Creates start and finish platforms and sets flag positions
-drawStartFinish() — Draws both platforms and flags
-resetPlayersToStart() — Sends both players back to the start area
-checkFinishReached() — Checks if either player touches the finish flag and resets the game state
-clearAllBuilds() — Clears all placed blocks, spikes, and power‑ups after a win
+setupStartFinish() — Creates start and finish platforms and sets flag positions<br>
+drawStartFinish() — Draws both platforms and flags<br>
+resetPlayersToStart() — Sends both players back to the start area<br>
+checkFinishReached() — Checks if either player touches the finish flag and resets the game state<br>
+clearAllBuilds() — Clears all placed blocks, spikes, and power‑ups after a win<br>
 
 **Window size Logic**<br>
 The finish platform now moves depending on the selected window size:
@@ -194,13 +194,13 @@ float x, y — Position of the power-up
 float size — Size of the power-up’s visual representation
 
 **Parameters**<br>
-x — X coordinate
-y — Y coordinate
+x — X coordinate<br>
+y — Y coordinate<br>
 
 **Methods**<br>
-display() — Draws the power-up on screen
-apply(Player p) — Applies the power-up’s effect to the player
-(Derived classes like SpeedPowerUp and BombPowerUp override apply() to define specific effects.)
+display() — Draws the power-up on screen<br>
+apply(Player p) — Applies the power-up’s effect to the player<br>
+(Derived classes like SpeedPowerUp and BombPowerUp override apply() to define specific effects.)<br>
 
 ## BuildMode Class
 
@@ -220,18 +220,18 @@ drawScoreBoxes();
 (None — functions operate globally.)
 
 **Fields**<br>
-ArrayList<Block> onScreenBlocks — List of placed blocks
-ArrayList<SpikeBlock> spikeBlocks — List of placed spikes
-ArrayList<PowerUp> powerUps — List of placed power-ups
-boolean holdingBlock, holdingSpike, holdingPowerUp — Track selected item type
-int sidePanelWidth — Width of the build menu panel
+ArrayList<Block> onScreenBlocks — List of placed blocks<br>
+ArrayList<SpikeBlock> spikeBlocks — List of placed spikes<br>
+ArrayList<PowerUp> powerUps — List of placed power-ups<br>
+boolean holdingBlock, holdingSpike, holdingPowerUp — Track selected item type<br>
+int sidePanelWidth — Width of the build menu panel<br>
 
 **Methods**<br>
-drawBuildMode() — Draws the build screen and UI
-drawInventory() — Displays item buttons for placement
-drawBlocks() — Draws all placed objects
-drawPlacementPreview() — Shows a transparent preview of the selected item under the mouse
-drawScoreBoxes() — Creates four empty boxes per player and fills them with color when points are earned
+drawBuildMode() — Draws the build screen and UI<br>
+drawInventory() — Displays item buttons for placement<br>
+drawBlocks() — Draws all placed objects<br>
+drawPlacementPreview() — Shows a transparent preview of the selected item under the mouse<br>
+drawScoreBoxes() — Creates four empty boxes per player and fills them with color when points are earned<br>
 
 ## PlayMode Class
 
@@ -247,15 +247,15 @@ bluePlayer.update();
 (None — functions operate globally.)
 
 **Fields**<br>
-Player redPlayer, bluePlayer — The two player objects
-ArrayList<Block> onScreenBlocks — Placed blocks
-ArrayList<SpikeBlock> spikeBlocks — Placed spikes
-ArrayList<PowerUp> powerUps — Active power-ups
+Player redPlayer, bluePlayer — The two player objects<br>
+ArrayList<Block> onScreenBlocks — Placed blocks<br>
+ArrayList<SpikeBlock> spikeBlocks — Placed spikes<br>
+ArrayList<PowerUp> powerUps — Active power-ups<br>
 
 **Methods**<br>
-drawPlayMode() — Draws the level and updates both players
-checkFinishReached() — Detects when a player reaches the finish flag
-resetPlayersToStart() — Resets both players to the start position
+drawPlayMode() — Draws the level and updates both players<br>
+checkFinishReached() — Detects when a player reaches the finish flag<br>
+resetPlayersToStart() — Resets both players to the start position<br>
 
 ## LevelSaveLoad Class
 
@@ -270,14 +270,14 @@ loadLevel();
 (None — uses global functions.)
 
 **Fields**<br>
-String fullPath — Path to the save file
-ArrayList<Block> onScreenBlocks — Blocks to save or load
-ArrayList<SpikeBlock> spikeBlocks — Spikes to save or load
-ArrayList<PowerUp> powerUps — Power-ups to save or load
+String fullPath — Path to the save file<br>
+ArrayList<Block> onScreenBlocks — Blocks to save or load<br>
+ArrayList<SpikeBlock> spikeBlocks — Spikes to save or load<br>
+ArrayList<PowerUp> powerUps — Power-ups to save or load<br>
 
 **Methods**<br>
-saveLevel() — Writes all placed objects to a file
-loadLevel() — Reads objects from a file and recreates them in the level
+saveLevel() — Writes all placed objects to a file<br>
+loadLevel() — Reads objects from a file and recreates them in the level<br>
 
 ## Main Class
 
@@ -306,31 +306,31 @@ void draw() {
 (None — uses Processing’s built-in setup() and draw() functions.)
 
 **Fields**<br>
-boolean[] keyDown — Tracks which keys are held down for smoother movement
-Player redPlayer, bluePlayer — The two player objects
-int worldWidth, worldHeight — Size of the full level area
-ArrayList<Block> onScreenBlocks — List of placed blocks
-ArrayList<SpikeBlock> spikeBlocks — List of placed spikes
-ArrayList<PowerUp> powerUps — List of placed power-ups
-boolean holdingBlock, holdingSpike, holdingPowerUp — Track selected item type for placement
-boolean holdingSpeedPowerUp, holdingBombPowerUp — Track specific power-up types
-int gameState — Current game mode (0 = Start, 1 = Build, 2 = Play)
-int sidePanelWidth — Width of the build menu panel
-int selectedSize — Stores the chosen window size (1400 or 1100)
-int redScore, blueScore — Track each player’s score
-int winner — Determines which player won (1 = red, 2 = blue)
+boolean[] keyDown — Tracks which keys are held down for smoother movement<br>
+Player redPlayer, bluePlayer — The two player objects<br>
+int worldWidth, worldHeight — Size of the full level area<br>
+ArrayList<Block> onScreenBlocks — List of placed blocks<br>
+ArrayList<SpikeBlock> spikeBlocks — List of placed spikes<br>
+ArrayList<PowerUp> powerUps — List of placed power-ups<br>
+boolean holdingBlock, holdingSpike, holdingPowerUp — Track selected item type for placement<br>
+boolean holdingSpeedPowerUp, holdingBombPowerUp — Track specific power-up types<br>
+int gameState — Current game mode (0 = Start, 1 = Build, 2 = Play)<br>
+int sidePanelWidth — Width of the build menu panel<br>
+int selectedSize — Stores the chosen window size (1400 or 1100)<br>
+int redScore, blueScore — Track each player’s score<br>
+int winner — Determines which player won (1 = red, 2 = blue)<br>
 
 **Parameters**<br>
 (Used in setup and event functions rather than constructors.)
 
 **Methods**<br>
-settings() — Sets the window size for the game
-setup() — Initializes start/finish platforms and both players
-draw() — Main game loop; switches between Start, Build, and Play modes
-mousePressed() — Handles clicks for switching states and placing items
-keyPressed() — Handles keyboard input for switching modes and saving/loading levels
-keyReleased() — Updates key states when keys are released
-drawStartMenu() — Displays the start screen with selectable window sizes
-drawWinScreen() — Shows the winner and lets players restart
-mousePressed() — Handles clicks for starting the game, selecting window size, and placing items
-clearAllBuilds() — Removes all placed objects after a win for a fresh start
+settings() — Sets the window size for the game<br>
+setup() — Initializes start/finish platforms and both players<br>
+draw() — Main game loop; switches between Start, Build, and Play modes<br>
+mousePressed() — Handles clicks for switching states and placing items<br>
+keyPressed() — Handles keyboard input for switching modes and saving/loading levels<br>
+keyReleased() — Updates key states when keys are released<br>
+drawStartMenu() — Displays the start screen with selectable window sizes<br>
+drawWinScreen() — Shows the winner and lets players restart<br>
+mousePressed() — Handles clicks for starting the game, selecting window size, and placing items<br>
+clearAllBuilds() — Removes all placed objects after a win for a fresh start<br>
