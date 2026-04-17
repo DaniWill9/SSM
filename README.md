@@ -8,16 +8,16 @@ This game is a two-player platformer built in Processing. Players can build leve
 
 # Markdown
 
-[Platform](#platform)  
+[Platform](#platform)<br>
 [Block](#block)<br>
-[SpikeBlock](#spikeblock)
-[Player](#player)
-[StartFinish](#startfinish)
-[PowerUp](#powerup)
-[BuildMode](#buildmode)
-[PlayMode](#playmode)
-[LevelSaveLoad](#level-saveload)
-[Main](#main)
+[SpikeBlock](#spikeblock)<br> 
+[Player](#player)<br>
+[StartFinish](#startfinish)<br>
+[PowerUp](#powerup)<br>
+[BuildMode](#buildmode)<br>
+[PlayMode](#playmode)<br>
+[LevelSaveLoad](#level-saveload)<br>
+[Main](#main)<br>
 
 ### Class Name
 
