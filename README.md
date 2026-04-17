@@ -8,20 +8,18 @@ This game is a two-player platformer built in Processing. Players can build leve
 
 # Markdown
 
-[Platform](#platform)<br>
-[Block](#block)<br>
-[SpikeBlock](#spikeblock)<br> 
-[Player](#player)<br>
-[StartFinish](#startfinish)<br>
-[PowerUp](#powerup)<br>
-[BuildMode](#buildmode)<br>
-[PlayMode](#playmode)<br>
-[LevelSaveLoad](#level-saveload)<br>
-[Main](#main)<br>
+- [Platform](#platform)<br>
+- [Block](#block)<br>
+- [SpikeBlock](#spikeblock)<br> 
+- [Player](#player)<br>
+- [StartFinish](#startfinish)<br>
+- [PowerUp](#powerup)<br>
+- [BuildMode](#buildmode)<br>
+- [PlayMode](#playmode)<br>
+- [LevelSaveLoad](#level-saveload)<br>
+- [Main](#main)<br>
 
-### Class Name
-
-## Platform
+## Platform Class
 
 **Description**<br>
 A simple class that represents a rectangular platform. This platform is used for the start and finish area. It positions the size, and it provides a method to draw the platform on the screen. It is also used in StartFinish.pde to adjust the finish platform based on the window size selected (1400 or 1100). 
@@ -49,9 +47,7 @@ ph — Height of the platform
 **Methods**<br>
 drawPlatform() — Draws the platform as a black rectangle.
 
-### Class Name
-
-## Block
+## Block Class
 
 **Description**<br>
 Represents a Solid block that players can stand on or collide with. Each block has a position, size, and color. Used in both Build Mode and Play Mode.
@@ -79,9 +75,7 @@ b — Blue color value
 **Methods**<br>
 display() — Draws the block as a colored rectangle.
 
-### Class Name
-
-## SpikeBlock
+## SpikeBlock Class
 
 **Description**<br>
 A danger block that resets the player's position when touched.  Drawn as a red triangle to represent danger.
@@ -105,9 +99,7 @@ y — Y coordinate
 **Methods**<br>
 display() — Draws a red triangle representing the spike
 
-### Class Name
-
-## Player
+## Player Class
 
 **Description**<br>
 Handles the player's movement, jumping, gravity, collisions, and interactions with spikes and power-ups. Each player has their own controls and color. It also includes two players (red and blue) with independent controls and scoring.
@@ -147,9 +139,7 @@ drawPlayer() — Draws the player as a rectangle
 checkWorldVoid() — Checks if the player’s Y position goes below the level height and resets them to the start
 death() — Resets the player’s position and velocity after falling off or touching spikes
 
-### Class Name
-
-## StartFinish
+## StartFinish Class
 
 **Description**<br>
 Manages the start and finish areas of the level, including platforms and flags for both players. It also handles resetting the player to the start and detecting when they reach the finish line. It also includes where the finish platform will be located based on the window size, as well as the scoring system that triggers the win screen when a player fills all four boxes. 
@@ -182,9 +172,7 @@ The finish platform now moves depending on the selected window size:
 970 for 1400‑pixel window
 670 for 1100‑pixel window
 
-### Class Name
-
-## PowerUp
+## PowerUp Class
 
 **Description**<br>
 Base class for collectible items that give an effect to players. Each power-up has a position and size, and can apply an effect when picked up. The child classes are SpeedPowerUp (which increases movement speed; it stacks and never removes itself) and BombPowerUp (which clears all blocks and spikes based on a certain radius, only if it's on the edges of a block or spike, then it will destroy it if the player touches it)
@@ -214,9 +202,7 @@ display() — Draws the power-up on screen
 apply(Player p) — Applies the power-up’s effect to the player
 (Derived classes like SpeedPowerUp and BombPowerUp override apply() to define specific effects.)
 
-### Class Name
-
-## BuildMode
+## BuildMode Class
 
 **Description**<br>
 This handles the level-building, where players can place blocks, spikes, and power-ups before testing the level. Includes inventory buttons and placement of transparent previews. It also includes a score box system for both red and blue that will fill with color when players reach the finish. 
@@ -247,9 +233,7 @@ drawBlocks() — Draws all placed objects
 drawPlacementPreview() — Shows a transparent preview of the selected item under the mouse
 drawScoreBoxes() — Creates four empty boxes per player and fills them with color when points are earned
 
-### Class Name
-
-## PlayMode
+## PlayMode Class
 
 **Description**<br>
 This class controls the gameplay, where players can move, jump, and interact with placed objects such as blocks, spikes, and powerups. It also updates the player's status and checks for level completion. It also has a two-player scoring system and a win screen transition. 
@@ -273,9 +257,7 @@ drawPlayMode() — Draws the level and updates both players
 checkFinishReached() — Detects when a player reaches the finish flag
 resetPlayersToStart() — Resets both players to the start position
 
-### Class Name
-
-## LevelSaveLoad
+## LevelSaveLoad Class
 
 **Description**<br>
 This class handles saving and loading the level data from a text file. Each object type (block, spike, power-up) is stored as a line in the file. It also updates to include power-up saving and loading for the Speed and Bomb types. 
@@ -297,9 +279,7 @@ ArrayList<PowerUp> powerUps — Power-ups to save or load
 saveLevel() — Writes all placed objects to a file
 loadLevel() — Reads objects from a file and recreates them in the level
 
-### Class Name
-
-## Main
+## Main Class
 
 **Description**<br>
 This class is the overall game flow, including setup, drawing, input handling, and switching between game states (Start, Build, Play). It also sets the players to their starting position, manages the world, and coordinates all other systems like blocks, spikes, and power-ups. It also includes selectable window sizes, a win screen, and a scoring system that loops back to the start screen if the blue or red wins. 
