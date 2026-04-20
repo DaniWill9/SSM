@@ -11,6 +11,7 @@ Player bluePlayer;
 // Makes the level area bigger than the window
 int worldWidth = 2700;
 int worldHeight = 520;
+
 // Lists for all placed blocks and spikes
 ArrayList<Block> onScreenBlocks = new ArrayList<Block>();
 ArrayList<SpikeBlock> spikeBlocks = new ArrayList<SpikeBlock>();

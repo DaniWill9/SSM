@@ -1,8 +1,7 @@
 // BLOCK CLASS
-// Used to create solid blocks that players can stand on or collide with
-// Each block has a position, size, and color
-// Blocks are placed in Build Mode and displayed during Play Mode for both players
-
+// Used to create solid blocks that players can stand on or collide with.
+// Each block has a position, size, and color. Blocks are placed in Build Mode
+// and displayed during Play Mode for both players.
 
 class Block {
 
@@ -17,7 +16,7 @@ class Block {
   int r, g, b;
 
   // Constructor
-  // Sets up the blocks position and color
+  // Sets up the block’s position and color
   Block(float x, float y, int r, int g, int b) {
     this.x = x;   // X position
     this.y = y;   // Y position
