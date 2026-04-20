@@ -1,4 +1,4 @@
-  //SPIKE BLOCK
+   //SPIKE BLOCK
   // Touching it resets the player
 
 class SpikeBlock {
