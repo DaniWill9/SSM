@@ -1,3 +1,14 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+//
+// void drawBuildMode()
+// void drawScoreBoxes()
+// void drawInventory() 
+// void drawBlocks()
+// void drawPlacementPreview() 
+
+
 // BUILD MODE
 // This screen is used for placing blocks and spikes before testing the level
 void drawBuildMode() {
@@ -31,6 +42,8 @@ void drawBuildMode() {
   text("Press S to Save", width - 100, 390);
 }
 
+// void drawBuildMode () end  
+
 // SCORE BOXES
 // Creates four empty boxes for each player at the top of the screen
 // When a player reaches the finish, their boxes fill with color
@@ -61,7 +74,9 @@ void drawScoreBoxes() {
   }
 }
 
+// drawScoreBoxes() end 
 
+// Side Panel list inventory 
 void drawInventory() {
   
   //block button
@@ -109,6 +124,8 @@ void drawInventory() {
   }
 }
  
+ // void drawInventory() End 
+ 
 // DRAW BLOCKS, SPIKES, POWERUPS
 // Shows everything already placed in the world 
 void drawBlocks() {
@@ -127,6 +144,8 @@ void drawBlocks() {
     p.display();
   }
 }
+
+// void drawBlocks() End 
 
 // DRAW PLACEMENT PREVIEW
 // Shows a see through preview of blocks, spikes, and powerups
@@ -169,3 +188,7 @@ void drawPlacementPreview() {
     
   }
 }
+
+// void drawPlacementPreview() End 
+
+//BUILD MODE end 

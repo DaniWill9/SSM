@@ -1,3 +1,18 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+//
+// void update()
+// void handleInput()
+// void applyPhysics() 
+// void verticalCollide() 
+// void checkSpikeHit()
+// void checkWorldVoid()
+// void death()
+// void checkPowerUps()
+// void drawPlayer()
+// 
+
 // PLAYER CLASS
 // Handles movement jumping gravity collisions and spike resets for each player
 class Player {
@@ -80,6 +95,8 @@ class Player {
     checkWorldVoid();// Checks if the player has gone below allowed Y level
   } 
 
+//   void update() End 
+
  // HANDLE INPUT
   // Checks held keys and moves the player
   void handleInput() {
@@ -111,6 +128,8 @@ class Player {
     }
   }
 
+//   void handleInput() End 
+
 // APPLY PHYSICS
   // Adds gravity and moves player based on speed
   void applyPhysics() {
@@ -118,6 +137,8 @@ class Player {
     x += vx;       // horizontal move
     y += vy;       // vertical move
   }
+
+// void applyPhysics() End 
 
  // VERTICAL COLLISION
   // Stops player from falling through platforms or blocks
@@ -172,6 +193,8 @@ class Player {
     }
    }
 
+//  void verticalCollide() End 
+
     // SPIKE COLLISION
     // If the player touches a spike they return to the starting spot
   void checkSpikeHit() {
@@ -188,12 +211,17 @@ class Player {
     }
   }
   
+  // void checkSpikeHit() End 
+  
    // checks for Y level where play-world ends and death happens
   void checkWorldVoid() {
     if (y > levelHeight) {
       death();
     }
   }
+  
+  // void checkWorldVoid() End 
+  
   // on player death
   void death(){
     x = startX;
@@ -201,6 +229,8 @@ class Player {
     vx = 0;
     vy = 0;
   }
+  
+  //   void death() End 
   
  // POWERUPS
  // Detect collission and Apply Effect
@@ -220,10 +250,15 @@ class Player {
     }
   }
 
+// void checkPowerUps() End 
+
   // DRAW PLAYER
   // Draws the player as a simple rectangle
   void drawPlayer() {
     fill(col);
     rect(x, y, w, h);
   }
+  
+  // void drawPlayer() End 
+  
 }

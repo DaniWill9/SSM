@@ -1,3 +1,11 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+// 
+// void saveLevel() 
+// void loadLevel()
+
+
 // SAVE & LOAD SYSTEM
 // Saves all blocks, spikes, and powerups into a file
 // Helps keep the level setup for later testing
@@ -37,6 +45,8 @@ void saveLevel() {
   println("Saved " + data.length + " items");
   println("Saved to: " + fullPath);
 }
+
+// void saveLevel() End 
 
 // Loads saved blocks, spikes, and powerups from file
 // Clears old ones and rebuilds them in the level
@@ -85,3 +95,5 @@ void loadLevel() {
   println("Loaded " + data.length + " items");
   println("Loaded from: " + fullPath);
 }
+
+// void loadLevel() End 

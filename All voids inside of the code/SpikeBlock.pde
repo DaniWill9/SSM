@@ -1,3 +1,10 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+// 
+// void display()
+
+   
    //SPIKE BLOCK
   // Touching it resets the player
 
@@ -28,4 +35,7 @@ class SpikeBlock {
       x + w, y + h    // right bottom
     );
   }
+  
+  //   void display() End 
+  
 }

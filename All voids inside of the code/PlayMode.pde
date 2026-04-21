@@ -1,3 +1,12 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+// 
+// void drawPlayMode()
+
+
+
+
 // PLAY MODE
 // Runs the play mode where both players move and interact
 // Shows blocks, spikes, powerups, and checks for finish contact
@@ -38,3 +47,5 @@ void drawPlayMode() {
   textSize(30); 
   text("Press B to Build", 130, 40);
 }
+
+// void drawPlayMode() End 

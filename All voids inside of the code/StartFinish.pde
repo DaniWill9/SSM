@@ -1,3 +1,13 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+// 
+// void setupStartFinish() 
+// void drawStartFinish()
+// void resetPlayersToStart()
+// void checkFinishReached()
+// void clearAllBuilds() 
+
 // START & FINISH SYSTEM
 // This creates the start area, finish area, and the flags for both players
 
@@ -37,6 +47,8 @@ void setupStartFinish() {
   finishY = finishPlatform.y - 42;
 }
 
+// void setupStartFinish() End 
+
 // DRAW START / FINISH
 // Draws both platforms and both flags in Build Mode and Play Mode
 void drawStartFinish() {
@@ -54,6 +66,8 @@ void drawStartFinish() {
   rect(finishX - 10, finishY - 40, 20, 40);
 }
 
+// void drawStartFinish() End 
+
 // RESET PLAYERS TO START
 // Sends both players back to the start area
 void resetPlayersToStart() {
@@ -70,6 +84,8 @@ void resetPlayersToStart() {
   redPlayer.vx = redPlayer.vy = 0;
   bluePlayer.vx = bluePlayer.vy = 0;
 }
+
+// void resetPlayersToStart() End 
 
 // CHECK IF PLAYER REACHED FINISH
 // Checks if a player reached the finish box
@@ -110,6 +126,8 @@ void checkFinishReached() {
   }
 }
 
+// void checkFinishReached() End 
+
 // CLEAR ALL BUILDS
 // Removes all placed blocks, spikes, and powerups for a fresh start
 void clearAllBuilds() {
@@ -117,3 +135,5 @@ void clearAllBuilds() {
   spikeBlocks.clear();     // Removes all Spikes 
   powerUps.clear();       // Removes all power ups 
 }
+
+// void clearAllBuilds() End 

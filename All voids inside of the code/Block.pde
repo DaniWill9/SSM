@@ -1,8 +1,16 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+// 
+//  void display()
+
+
+
+
 // BLOCK CLASS
 // Used to create solid blocks that players can stand on or collide with
 // Each block has a position, size, and color
 // Blocks are placed in Build Mode and displayed during Play Mode for both players
-
 
 class Block {
 
@@ -32,4 +40,7 @@ class Block {
     fill(r, g, b);   // Apply color
     rect(x, y, w, h); // Draw the block shape
   }
+  
+  //  void display() End 
+  
 }

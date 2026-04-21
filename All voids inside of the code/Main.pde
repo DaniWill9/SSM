@@ -1,3 +1,17 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+// 
+// void settings() 
+// void setup()
+// void draw()
+// void drawStartMenu()
+// void mousePressed()
+// void keyPressed()
+// void keyReleased()
+// void drawWinScreen()  
+
+
 // MAIN GAME FILE
 
 // Tracks which keys are held down for both players to keep movement smoother
@@ -46,6 +60,8 @@ void settings() {
   size(1400, worldHeight);
 }
 
+// void settings() End 
+
 // SETUP
 // Runs once and creates the start and finish platforms and both players
 void setup() {
@@ -63,6 +79,8 @@ void setup() {
   powerUps.add(new BombPowerUp(350,200));
   */
 }
+
+// void setup() End 
 
 // DRAW LOOP
 void draw() {
@@ -89,6 +107,8 @@ void draw() {
     drawWinScreen();
   }
 }
+
+// void draw() End 
 
 // Draws the start menu with size options and start button
 void drawStartMenu() {
@@ -123,6 +143,8 @@ void drawStartMenu() {
   rectMode(CORNER);
   textAlign(LEFT, BASELINE);
 }
+
+// void drawStartMenu() End 
 
 // MOUSE PRESSED
 void mousePressed() {
@@ -241,6 +263,8 @@ if (gameState == 3) {
   }
 }
 
+// void mousePressed() End 
+
 // KEY PRESSED
 void keyPressed() {
   if (keyCode < 512) keyDown[keyCode] = true;
@@ -262,11 +286,15 @@ void keyPressed() {
   if (gameState == 1 && key == 'l') loadLevel();
 }
 
+// void keyPressed() End 
+
 // KEY RELEASED
 void keyReleased() {
   if (keyCode < 512) keyDown[keyCode] = false;
   if (key < 512) keyDown[key] = false;
 }
+
+// void keyReleased() End 
 
 // WIN SCREEN
 // Shows who won and lets players restart
@@ -290,3 +318,5 @@ void drawWinScreen() {
   textSize(24);
   text("Play again", width/2, 230);
 }
+
+// void drawWinScreen()  End 

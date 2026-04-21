@@ -1,3 +1,12 @@
+// void inside of build 
+//
+// You can press Ctrl + F and type down the void to find them
+// 
+//   void apply(Player player) // Used in class SpeedPowerUp extends, class BombPowerUp
+// 
+//   void display()  // Used in class PowerUp, class SpeedPowerUp, class BombPowerUp  
+// 
+
 //POWERUPS CLASS
 //Handles abilites like speed, bombs to destroy blocks etc.
 class PowerUp {
@@ -11,11 +20,16 @@ class PowerUp {
   void display() {
     ellipse(x, y, size, size);
   }
+  
+  //   void display() End 
  
   //this looks weird because it's empty, but it is here to auto-insert the needed child class
   void apply(Player player) {
   //start loopiing through child classes
   }
+  
+  // void apply(Player player) End 
+  
 }
 
 //POWERUP SUBCLASSES
