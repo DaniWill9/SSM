@@ -19,6 +19,13 @@ void drawPlayMode() {
     p.displayPowerUp();
   }
 
+// activates caster, shows beams and resets players if hit
+  for(Caster c: casters){
+  c.activate();
+  c.update(redPlayer,bluePlayer);
+  c.display();
+}
+  
   redPlayer.update();
 
   bluePlayer.update();

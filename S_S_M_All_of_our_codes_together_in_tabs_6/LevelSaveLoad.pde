@@ -7,7 +7,7 @@ void saveLevel() {
     return;
   }
 
-  String[] data = new String[onScreenBlocks.size() + spikeBlocks.size() + powerUps.size()];
+  String[] data = new String[onScreenBlocks.size() + spikeBlocks.size() + powerUps.size()+casters.size()];
 
   int index = 0; 
 
@@ -25,6 +25,11 @@ void saveLevel() {
     data [index] = "P," + p.x + "," + p.y;
     index++;
   }
+  
+  for(Caster c: casters){
+  data [index] = "C," + c.x +"," + c.y;
+  index++;
+}
 
   String fullPath = dataPath("savedState.txt");
 
@@ -48,6 +53,7 @@ void loadLevel() {
   onScreenBlocks.clear();
   spikeBlocks.clear();
   powerUps.clear();
+  casters.clear();
 
   for (String line : data) {
 
@@ -73,6 +79,11 @@ void loadLevel() {
         powerUps.add(new SpeedPowerUp(x,y));
         powerUps.add(new BombPowerUp(x,y));
       }
+      if (parts[0].equals("C")) {
+        float x = float(parts[1]);
+        float y = float(parts[2]);
+        casters.add(new Caster(x, y));
+}
     }
   }
 

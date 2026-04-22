@@ -2,6 +2,7 @@
 // BUILD MODE
 // This screen is used for placing blocks and spikes before testing the level
 void drawBuildMode() {
+println(mouseX,mouseY);
 
   background(220);
 
@@ -49,10 +50,35 @@ void drawInventory() {
   
   fill(0);
   text ("Bomb", width - 100, 310);
+<<<<<<< Updated upstream
   
 }
 
 // DRAW BLOCKS + SPIKES
+=======
+
+  if (dist(mouseX, mouseY, width - 100, 310) < 15) {
+    holdingPowerUp = true;
+    holdingBombPowerUp = true;
+    holdingSpeedPowerUp = false;
+  }
+  
+  //Beam Button and checks if pressed and holding
+  fill(50);
+  rect(width-150,40,100,50);
+  fill(255);
+  text("Beam", width-100,70);
+  
+  if (mouseX>width-250 && mouseX<950 && mouseY>40 && mouseY<90) {
+    holdingCaster= true;
+    holdingPowerUp = false;
+    holdingBombPowerUp = false;
+    holdingSpeedPowerUp = false;
+  }
+}
+ 
+// DRAW BLOCKS, SPIKES, POWERUPS, 
+>>>>>>> Stashed changes
 // Shows everything already placed in the world 
 void drawBlocks() {
 
@@ -69,6 +95,11 @@ void drawBlocks() {
     //p.displaySpeedPowerUp();
    // p.displayBombPowerUp();
   }
+  
+  //Beam Caster
+    for (Caster c : casters) {
+  c.display();
+}
 }
 
 // DRAW PLACEMENT PREVIEW
@@ -107,6 +138,11 @@ void drawPlacementPreview() {
      //ellipse(300,200,255,80);
      //ellipse(mouseX, mouseY + 50, mouseX + 50, mouseY);
      }
-    
+     
+     //Caster's preview's look
+    if (holdingCaster) { 
+      fill(75); //preview color
+      rect(mouseX, mouseY, 20, 20); //preview's position, casters size
+    }
   }
 }

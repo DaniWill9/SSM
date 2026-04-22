@@ -19,12 +19,15 @@ ArrayList<SpikeBlock> spikeBlocks = new ArrayList<SpikeBlock>();
 // Lists for all PowerUps
 ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
+//Lists for all Beam Caster
+ArrayList<Caster> casters = new ArrayList<Caster>();
 // What item is currently selected for placing
 boolean holdingBlock = false;
 boolean holdingSpike = false;
 boolean holdingPowerUp = false;
 boolean holdingSpeedPowerUp = false;
 boolean holdingBombPowerUp = false;
+boolean holdingCaster= false;
 
 int gameState = 0; // 0 = Start, 1 = Build, 2 = Play
 
@@ -113,6 +116,14 @@ void mousePressed() {
       holdingBlock = false;
       holdingSpike =  false;
     }
+    // When holding caster is true
+     else if(mouseX>width-150 && mouseX< width-50 && mouseY>260 && mouseY<310){
+        holdingCaster=true;
+        
+        holdingBlock= false;
+        holdingSpike= false;
+        holdingPowerUp= false;
+      }
     
     // Placing items in the world area
     else if (mouseX < width - sidePanelWidth) {
@@ -134,8 +145,43 @@ void mousePressed() {
       }
     // Place powerup
       else if (holdingPowerUp) {
+<<<<<<< Updated upstream
         powerUps.add(new PowerUp(px, py));
         holdingPowerUp = false;
+=======
+        if (holdingSpeedPowerUp) {
+          powerUps.add(new SpeedPowerUp(px, py));
+        }
+        else if (holdingBombPowerUp) {
+          powerUps.add(new BombPowerUp(px, py));
+        }
+          holdingPowerUp = false;
+          holdingBombPowerUp = false;
+          holdingSpeedPowerUp = false;
+          holdingCaster = false;
+
+      }
+      
+      else if (holdingPowerUp) {
+        if (holdingSpeedPowerUp) {
+          powerUps.add(new SpeedPowerUp(px, py));
+        }
+        else if (holdingBombPowerUp) {
+          powerUps.add(new BombPowerUp(px, py));
+        }
+          holdingPowerUp = false;
+          holdingBombPowerUp = false;
+          holdingSpeedPowerUp = false;
+          holdingCaster = false;
+      }
+      //places caster
+      else if(holdingCaster){
+        casters.add(new Caster(px,py));
+        holdingCaster= false;
+        holdingBlock= false;
+        holdingSpike= false;
+        holdingPowerUp= false;
+>>>>>>> Stashed changes
       }
     }
   }

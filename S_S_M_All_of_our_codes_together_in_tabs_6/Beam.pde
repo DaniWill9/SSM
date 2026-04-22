@@ -1,29 +1,34 @@
 //Ziggy
 class Beam {
-  float x, y;
-  float xSpeed, ySpeed;
+  float x, y; // beams x and y position
+  float xSpeed, ySpeed; // horizontal speed, vertical speed
+  float w,h; //width, height
 
-  Beam(float iX, float iY, float hSpeed, float vSpeed) {
+  Beam(float iX, float iY, float hSpeed, float vSpeed, float beamW, float beamH) {
     x = iX; //Inital starting points for beams X axis
     y = iY; //starting points for beams Y axis
-    xSpeed = hSpeed; //horizontal Speed
+    xSpeed = hSpeed; //Horizontal Speed
     ySpeed = vSpeed;//Vertical speed
+    beamW=5; //Beam's width
+    beamH=3;// Beam's height
+    w = beamW;//substitute for beam widths
+    h = beamH;// substitute for beam height
   }
 
 //Moves beam
   void update() {
-    x += xSpeed; // left and  right
-    y += ySpeed; //up and down
+    x += xSpeed; // left and  right speeds
+    y += ySpeed; //up and down speeds
   }
 
 //shows beam 
   void display() {
-    fill(0);
-    rect(x, y, 10, 10); //beam
+    fill(0); //color for beam
+    rect(x, y, w,h); //beam
   }
 
-//checks if offscreen and resets
+//checks if offscreen
   boolean isOffScreen() {
-    return (x < 0 || x > width || y < 0 || y > height);
+    return (x < 0 || x > width || y < 0 || y > height); // when is it offScreen
   }
 }
