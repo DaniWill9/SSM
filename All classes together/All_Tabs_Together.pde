@@ -1,607 +1,3 @@
-// MAIN GAME FILE
-
-// Tracks which keys are held down for both players to keep movement smoother
-boolean[] keyDown = new boolean[512];
-
-// Creates both players and sets up their starting spots
-Player redPlayer;
-Player bluePlayer;
-
-// Size of the full level area so the level can be bigger than the window
-// Makes the level area bigger than the window
-int worldWidth = 2700;
-int worldHeight = 520;
-
-// Lists for all placed blocks and spikes
-ArrayList<Block> onScreenBlocks = new ArrayList<Block>();
-ArrayList<SpikeBlock> spikeBlocks = new ArrayList<SpikeBlock>();
-
-// Lists for all PowerUps
-ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-
-// What item is currently selected for placing
-boolean holdingBlock = false;
-boolean holdingSpike = false;
-boolean holdingPowerUp = false;
-boolean holdingSpeedPowerUp = false;
-boolean holdingBombPowerUp = false;
-
-int gameState = 0; // 0 = Start, 1 = Build, 2 = Play
-
-// The side panel on the right side of the window
-int sidePanelWidth = 200;
-
-// Lets the player pick between two window sizes
-int selectedSize = 1400;  // default window size
-
-// Keeps track of points and who wins
-// Player scores
-int redScore = 0;
-int blueScore = 0;
-
-int winner = 0; // 0 = none, 1 = red wins, 2 = blue wins
-
-//Window Size Settings
-void settings() {
-  size(1400, worldHeight);
-}
-
-// SETUP
-// Runs once and creates the start and finish platforms and both players
-void setup() {
-  setupStartFinish();
-  
-  // Red and blue players start next to each other on the platform
-  redPlayer = new Player(startX, startY, color(255, 0, 0), worldHeight);
-  bluePlayer = new Player(startX + 40, startY, color(0, 120, 255), worldHeight);
-
-  
-  /*
-  //To Test PowerUps Functionality
-  powerUps.add(new PowerUp(200,200));
-  powerUps.add(new SpeedPowerUp(200,200));
-  powerUps.add(new BombPowerUp(350,200));
-  */
-}
-
-// DRAW LOOP
-void draw() {
-  if (gameState == 0) {
-    background(30);
-    textAlign(CENTER, CENTER);
-    textSize(28);
-    fill(255);
-    text("Start Game Screen", width/2, 100);
-
-    // Draw boxes for Start and sizes
-    drawStartMenu();
-  }
-  // Build mode screen state to show give the option to build and place stuff 
-  else if (gameState == 1) {
-    drawBuildMode();
-  }
-  // Play mode screen state to show the player moving and play on what they built
-  else if (gameState == 2) {
-    drawPlayMode();
-  }  
-   // Win mode screen state to show who won
-   else if (gameState == 3) {
-    drawWinScreen();
-  }
-}
-
-// Draws the start menu with size options and start button
-void drawStartMenu() {
-  rectMode(CENTER);
-  textAlign(CENTER, CENTER);
-  textSize(20);
-
-  // Start Game box
-  fill(100, 200, 100);
-  rect(width/2, 220, 200, 50);
-  fill(0);
-  text("Start Game", width/2, 220);
-
-  // Original size box
-  fill(selectedSize == 1400 ? color(200, 0, 0) : color(180));
-  rect(width/2, 300, 200, 50);
-  fill(0);
-  text("1400 (Original)", width/2, 300);
-
-  // Smaller size box
-  fill(selectedSize == 1100 ? color(200, 0, 0) : color(180));
-  rect(width/2, 380, 200, 50);
-  fill(0);
-  text("1100 (Smaller)", width/2, 380);
-
-  // Instruction text
-  fill(255);
-  textSize(18);
-  text("Click a size to select (red = chosen)\nThen click Start Game", width/2, 460);
-
-  // Reset modes so Build/Play dont inherit CENTER
-  rectMode(CORNER);
-  textAlign(LEFT, BASELINE);
-}
-
-// MOUSE PRESSED
-void mousePressed() {
-  // Start Screen
-  if (gameState == 0) {
-    // Start Game box
-    if (mouseX > width/2 - 100 && mouseX < width/2 + 100 &&
-        mouseY > 195 && mouseY < 245) {
-      // Apply chosen size, then go to Build
-      surface.setSize(selectedSize, worldHeight);
-      gameState = 1;
-      return;
-    }
-
-    // 1400 box
-    if (mouseX > width/2 - 100 && mouseX < width/2 + 100 &&
-    mouseY > 275 && mouseY < 325) {
-    selectedSize = 1400;
-    // Rebuild start and finish platforms for the oringal size
-    setupStartFinish();
-    }
-
-    // 1100 box
-    if (mouseX > width/2 - 100 && mouseX < width/2 + 100 &&
-    mouseY > 355 && mouseY < 405) {
-    selectedSize = 1100;
-    // Rebuild start and finish platforms for the smaller size
-    setupStartFinish();
-  }
-
-
-    return;
-  }
-// Win Screen click
-if (gameState == 3) {
-  // Replay box area
-  if (mouseX > width/2 - 150 && mouseX < width/2 + 150 &&
-      mouseY > 200 && mouseY < 260) {
-    // Reset everything for a fresh new gameplay
-    redScore = 0;
-    blueScore = 0;
-    winner = 0;
-    gameState = 0;
-  }
-  return;
-}
-
-  // Build Mode clicks 
-  if (gameState == 1) {
-    // Block button
-    if (mouseX > width - 150 && mouseX < width - 50 &&
-        mouseY > 100 && mouseY < 150) {
-
-      holdingBlock = true;
-      holdingSpike = false;
-      holdingPowerUp = false;
-      holdingSpeedPowerUp = false;
-      holdingBombPowerUp = false;
-    }
-    // Spike button
-    else if (mouseX > width - 150 && mouseX < width - 50 &&
-             mouseY > 170 && mouseY < 220) {
-
-      holdingSpike = true;
-      holdingBlock = false;
-      holdingPowerUp = false;
-      holdingSpeedPowerUp = false;
-      holdingBombPowerUp = false;
-    }
-    // Speed PowerUp (matches circle at y=260)
-    else if (mouseX > width - 150 && mouseX < width - 50 &&
-             mouseY > 240 && mouseY < 270) {
-      holdingPowerUp = true;
-      holdingSpeedPowerUp = true;
-      holdingBombPowerUp = false;
-      holdingBlock = false;
-      holdingSpike = false;
-    }
-    // Bomb PowerUp (matches circle at y=315)
-    else if (mouseX > width - 150 && mouseX < width - 50 &&
-             mouseY > 295 && mouseY < 325) {
-      holdingPowerUp = true;
-      holdingBombPowerUp = true;
-      holdingSpeedPowerUp = false;
-      holdingBlock = false;
-      holdingSpike = false;
-    }
-    // Placing items in the world area 
-    else if (mouseX < width - sidePanelWidth) {
-
-      float px = constrain(mouseX, 0, worldWidth - 50);
-      float py = constrain(mouseY, 0, worldHeight - 50);
-    
-      // Place block placement
-      if (holdingBlock) {
-        onScreenBlocks.add(new Block(px, py, 100, 200, 100));
-        holdingBlock = false;
-      }
-      // Place spike placement
-      else if (holdingSpike) {
-        spikeBlocks.add(new SpikeBlock(px, py));
-        holdingSpike = false;
-      }
-      // Place powerup placement bomb/speed
-      else if (holdingPowerUp) {
-        if (holdingSpeedPowerUp) {
-          powerUps.add(new SpeedPowerUp(px, py));
-        } else if (holdingBombPowerUp) {
-          powerUps.add(new BombPowerUp(px, py));
-        }
-        holdingPowerUp = false;
-        holdingBombPowerUp = false;
-        holdingSpeedPowerUp = false;
-      }
-    }
-  }
-}
-
-// KEY PRESSED
-void keyPressed() {
-  if (keyCode < 512) keyDown[keyCode] = true;
-  if (key < 512) keyDown[key] = true;
-
-  //checks if p key is being pressed and sends them into play mode
-  if (gameState == 1 && key == 'p') {
-    gameState = 2;          // play mode
-  }
-
-  //checks if b key is being pressed and sends them into build mode
-  if (gameState == 2 && key == 'b') {
-    gameState = 1;          // build mode
-    resetPlayersToStart();  // send them back to the start platform once b key is pressed
-  }
-
-  // checks if s or l is being pressed in build mode 
-  if (gameState == 1 && key == 's') saveLevel();
-  if (gameState == 1 && key == 'l') loadLevel();
-}
-
-// KEY RELEASED
-void keyReleased() {
-  if (keyCode < 512) keyDown[keyCode] = false;
-  if (key < 512) keyDown[key] = false;
-}
-
-// WIN SCREEN
-// Shows who won and lets players restart
-void drawWinScreen() {
-  background(220);
-
-  // Winner text color
-  if (winner == 1) fill(255, 0, 0);
-  else if (winner == 2) fill(0, 120, 255);
-  else fill(0);
-
-  textAlign(CENTER, CENTER);
-  textSize(40);
-  text(winner == 1 ? "RED PLAYER WINS!" : "BLUE PLAYER WINS!", width/2, 150);
-  
-  // Black box under winner text
-  fill(0);
-  rect(width/2 - 150, 200, 300, 60);
-
-  fill(255);
-  textSize(24);
-  text("Play again", width/2, 230);
-}
-
-// MAIN GAME END 
-
-
-// BUILD MODE
-// This screen is used for placing blocks and spikes before testing the level
-void drawBuildMode() {
-
-  background(220);
-
-  fill(180);
-  rect(0, 0, width - sidePanelWidth, worldHeight);
-
-  fill(140);
-  rect(width - sidePanelWidth, 0, sidePanelWidth, worldHeight);
-
-  drawInventory();
-
-  drawBlocks();
- 
-  // Draw start and finish platforms + flags
-  drawStartFinish();
-  
-// Shows a see through preview of the block or spike
-// This helps the player see where the item will go before placing it
-  drawPlacementPreview();
-  
-  // Draw score boxes only in Build Mode
-  drawScoreBoxes();
-
-  fill(0);
-  textAlign(CENTER);
-  textSize(24); 
-  text("Press P to Play", width - 100, 360);
-  text("Press S to Save", width - 100, 390);
-}
-
-// SCORE BOXES
-// Creates four empty boxes for each player at the top of the screen
-// When a player reaches the finish, their boxes fill with color
-// Red boxes fill for the red player and blue boxes fill for the blue player
-// Once all four boxes are filled, it triggers the win screen
-void drawScoreBoxes() {
-  
-  // Red side boxes (top left) can also set the amount by changing the 4
-  for (int i = 0; i < 4; i++) {
-    fill(255); // empty box
-    rect(20 + i * 40, 20, 30, 30);
-  }
-  // Fill boxes for red players points
-  for (int i = 0; i < redScore; i++) {
-    fill(255, 0, 0);
-    rect(20 + i * 40, 20, 30, 30);
-  }
-
-  // Blue side boxes (top right) can also set the amount by changing the 4
-  for (int i = 0; i < 4; i++) {
-    fill(255);
-    rect(width - 160 + i * 40, 20, 30, 30);
-  }
-  // Fill boxes for blue players points
-  for (int i = 0; i < blueScore; i++) {
-    fill(0, 120, 255);
-    rect(width - 160 + i * 40, 20, 30, 30);
-  }
-}
-
-
-void drawInventory() {
-  
-  //block button
-  fill(100, 200, 100);
-  rect(width - 150, 100, 100, 50);
-
-  fill(0);
-  textSize(25);     
-  text("Block", width - 100, 135);
-
-  //spike button
-  fill(200, 80, 80);
-  rect(width - 150, 170, 100, 50);
-
-  fill(0);
-  textSize(25); 
-  text("Spike", width - 100, 205);
-
-  // Speed Button
-    fill(0,200,255);
-  circle(width - 100, 255, 30);
-  
-  fill (0);
-  textSize(20); 
-  text ("Speed", width - 100, 260);
-
-  if (dist(mouseX, mouseY, width - 100, 255) < 15) {
-   holdingPowerUp = true;
-   holdingSpeedPowerUp = true;
-   holdingBombPowerUp = false;
-  }
- 
-  // Bomb Button
-  fill(134, 41, 27);
-  circle(width - 100, 310, 30);
-  
-  fill(0);
-  textSize(20); 
-  text ("Bomb", width - 100, 315);
-
-  if (dist(mouseX, mouseY, width - 100, 310) < 15) {
-    holdingPowerUp = true;
-    holdingBombPowerUp = true;
-    holdingSpeedPowerUp = false;
-  }
-}
- 
-// DRAW BLOCKS, SPIKES, POWERUPS
-// Shows everything already placed in the world 
-void drawBlocks() {
-
-  // Normal blocks
-  for (Block b : onScreenBlocks) {
-    b.display();
-  }
-  // Spike blocks
-  for (SpikeBlock s : spikeBlocks) {
-    s.display();
-  }
-
-  // PowerUps
-  for (PowerUp p : powerUps) {
-    p.display();
-  }
-}
-
-// DRAW PLACEMENT PREVIEW
-// Shows a see through preview of blocks, spikes, and powerups
-// Helps the player see where an item will go before placing it
-void drawPlacementPreview() {
-
-    // Only show preview in the world area
-  if (mouseX < width - sidePanelWidth) {
-   
-    // Block preview
-    if (holdingBlock) {
-      fill(100, 200, 100, 120);  
-      rect(mouseX, mouseY, 50, 50);
-    }
-   // Spike preview
-    if (holdingSpike) {
-      fill(200, 50, 50, 120);  
-      triangle(
-        mouseX, mouseY + 50,     
-        mouseX + 25, mouseY,     
-        mouseX + 50, mouseY + 50 
-      );
-    }
-
-   // PowerUps preview
-   // Speed PowerUp preview
-    if (holdingSpeedPowerUp) {
-       fill(0,200,255);
-      ellipse(mouseX, mouseY, 20, 20);
-    }
-    
-    // Bomb PowerUp preview
-    if (holdingBombPowerUp) {
-      fill(134, 41, 27, 120);  
-      ellipse(mouseX, mouseY, 20, 20);
-
-     //ellipse(300,200,255,80);
-     //ellipse(mouseX, mouseY + 50, mouseX + 50, mouseY);
-     }
-    
-  }
-}
-
-// BUILD MODE END
-
-
-// PLAY MODE
-// Runs the play mode where both players move and interact
-// Shows blocks, spikes, powerups, and checks for finish contact
-void drawPlayMode() {
-
-  background(200);
-
-  // Draws start and finish platforms and flags
-  drawStartFinish();
-
-  // Shows all blocks placed in the level
-  for (Block b : onScreenBlocks) {
-    b.display();
-  }
-
-   // Shows all spikes placed in the level
-  for (SpikeBlock s : spikeBlocks) {
-    s.display();
-  }
-   // Shows all powerups placed in the level
-  for (PowerUp p : powerUps) {
-    p.display();
-  }
-
-  // Updates both players with movement and gravity
-  redPlayer.update();
-  bluePlayer.update();
-
-  // Draws both players on screen
-  redPlayer.drawPlayer();
-  bluePlayer.drawPlayer();
-
-  // Checks if either player reached the finish box
-  checkFinishReached();
-
-  // Shows a small reminder to go back to build mode
-  fill(0);
-  textSize(30); 
-  text("Press B to Build", 130, 40);
-}
-
-// PLAY MODE END 
-
-// SAVE & LOAD SYSTEM
-// Saves all blocks, spikes, and powerups into a file
-// Helps keep the level setup for later testing
-void saveLevel() {
-
-  if (onScreenBlocks.size() == 0 && spikeBlocks.size() == 0) {
-    println("No blocks to save.");
-    return;
-  }
-
-  String[] data = new String[onScreenBlocks.size() + spikeBlocks.size() + powerUps.size()];
-
-  int index = 0; 
-
-  // Saves block positions
-  for (Block b : onScreenBlocks) {
-    data[index] = "B," + b.x + "," + b.y;
-    index++;
-  }
-
-  // Saves spike positions
-  for (SpikeBlock s : spikeBlocks) {
-    data[index] = "S," + s.x + "," + s.y;
-    index++;
-  }
-
-  // Saves powerups positions
-  for (PowerUp p : powerUps) {
-    data [index] = "P," + p.x + "," + p.y;
-    index++;
-  }
-
-  String fullPath = dataPath("savedState.txt");
-
-  saveStrings(fullPath, data);
-
-  println("Saved " + data.length + " items");
-  println("Saved to: " + fullPath);
-}
-
-// Loads saved blocks, spikes, and powerups from file
-// Clears old ones and rebuilds them in the level
-void loadLevel() {
-
-  String fullPath = dataPath("savedState.txt");
-
-  String[] data = loadStrings(fullPath);
-
-  if (data == null) {
-    println("No save file found.");
-    return;
-  }
-
-  onScreenBlocks.clear();
-  spikeBlocks.clear();
-  powerUps.clear();
-
-  for (String line : data) {
-
-    if (line != null && line.length() > 0) {
-
-      String[] parts = split(line, ",");
-
-      if (parts[0].equals("B")) {
-        float x = float(parts[1]);
-        float y = float(parts[2]);
-        onScreenBlocks.add(new Block(x, y, 100, 200, 100));
-      }
-
-      if (parts[0].equals("S")) {
-        float x = float(parts[1]);
-        float y = float(parts[2]);
-        spikeBlocks.add(new SpikeBlock(x, y));
-      }
-      if (parts[0].equals("P")) {
-        float x = float (parts[1]);
-        float y = float(parts[2]);
-        powerUps.add(new PowerUp(x,y));
-        powerUps.add(new SpeedPowerUp(x,y));
-        powerUps.add(new BombPowerUp(x,y));
-      }
-    }
-  }
-
-  println("Loaded " + data.length + " items");
-  println("Loaded from: " + fullPath);
-}
-
-// SAVE & LOAD SYSTEM END 
-
 // PLAYER CLASS
 // Handles movement jumping gravity collisions and spike resets for each player
 class Player {
@@ -879,7 +275,7 @@ class Block {
   int r, g, b;
 
   // Constructor
-  // Sets up the block’s position and color
+  // Sets up the blocks position and color
   Block(float x, float y, int r, int g, int b) {
     this.x = x;   // X position
     this.y = y;   // Y position
@@ -936,7 +332,7 @@ class SpeedPowerUp extends PowerUp {
   }
 }
 
-//BOMB POWERUP
+//BOMB POWERUP CLASS
 //When players step on it, it destroys all blocks in a certain radius around them
 class BombPowerUp extends PowerUp {
   BombPowerUp (float x, float y) {
@@ -969,9 +365,8 @@ class BombPowerUp extends PowerUp {
 
 // POWERUPS CLASS END 
 
-   //SPIKE BLOCK
-  // Touching it resets the player
-
+//SPIKE BLOCK CLASS
+// Touching it resets the player
 class SpikeBlock {
 
   // Spike position
@@ -1001,11 +396,10 @@ class SpikeBlock {
   }
 }
 
-// SPIKE BLOCK END 
+// SPIKE BLOCK CLASS END 
 
 // START & FINISH SYSTEM
 // This creates the start area, finish area, and the flags for both players
-
 // Starting position for both players
 float startX = 80;
 float startY = 308;
@@ -1123,4 +517,311 @@ void clearAllBuilds() {
   powerUps.clear();       // Removes all power ups 
 }
 
-// START & FINISH SYSTEM END 
+// START & FINISH SYSTEM END
+
+// BUILD MODE
+// This screen is used for placing blocks and spikes before testing the level
+void drawBuildMode() {
+
+  background(220);
+
+  fill(180);
+  rect(0, 0, width - sidePanelWidth, worldHeight);
+
+  fill(140);
+  rect(width - sidePanelWidth, 0, sidePanelWidth, worldHeight);
+
+  drawInventory();
+
+  drawBlocks();
+ 
+  // Draw start and finish platforms + flags
+  drawStartFinish();
+  
+// Shows a see through preview of the block or spike
+// This helps the player see where the item will go before placing it
+  drawPlacementPreview();
+  
+  // Draw score boxes only in Build Mode
+  drawScoreBoxes();
+
+  fill(0);
+  textAlign(CENTER);
+  textSize(24); 
+  text("Press P to Play", width - 100, 360);
+  text("Press S to Save", width - 100, 390);
+}
+
+// SCORE BOXES
+// Creates four empty boxes for each player at the top of the screen
+// When a player reaches the finish, their boxes fill with color
+// Red boxes fill for the red player and blue boxes fill for the blue player
+// Once all four boxes are filled, it triggers the win screen
+void drawScoreBoxes() {
+  
+  // Red side boxes (top left) can also set the amount by changing the 4
+  for (int i = 0; i < 4; i++) {
+    fill(255); // empty box
+    rect(20 + i * 40, 20, 30, 30);
+  }
+  // Fill boxes for red players points
+  for (int i = 0; i < redScore; i++) {
+    fill(255, 0, 0);
+    rect(20 + i * 40, 20, 30, 30);
+  }
+
+  // Blue side boxes (top right) can also set the amount by changing the 4
+  for (int i = 0; i < 4; i++) {
+    fill(255);
+    rect(width - 160 + i * 40, 20, 30, 30);
+  }
+  // Fill boxes for blue players points
+  for (int i = 0; i < blueScore; i++) {
+    fill(0, 120, 255);
+    rect(width - 160 + i * 40, 20, 30, 30);
+  }
+}
+
+
+void drawInventory() {
+  
+  //block button
+  fill(100, 200, 100);
+  rect(width - 150, 100, 100, 50);
+
+  fill(0);
+  textSize(25);     
+  text("Block", width - 100, 135);
+
+  //spike button
+  fill(200, 80, 80);
+  rect(width - 150, 170, 100, 50);
+
+  fill(0);
+  textSize(25); 
+  text("Spike", width - 100, 205);
+
+  // Speed Button
+    fill(0,200,255);
+  circle(width - 100, 255, 30);
+  
+  fill (0);
+  textSize(20); 
+  text ("Speed", width - 100, 260);
+
+  if (dist(mouseX, mouseY, width - 100, 255) < 15) {
+   holdingPowerUp = true;
+   holdingSpeedPowerUp = true;
+   holdingBombPowerUp = false;
+  }
+ 
+  // Bomb Button
+  fill(134, 41, 27);
+  circle(width - 100, 310, 30);
+  
+  fill(0);
+  textSize(20); 
+  text ("Bomb", width - 100, 315);
+
+  if (dist(mouseX, mouseY, width - 100, 310) < 15) {
+    holdingPowerUp = true;
+    holdingBombPowerUp = true;
+    holdingSpeedPowerUp = false;
+  }
+}
+ 
+// DRAW BLOCKS, SPIKES, POWERUPS
+// Shows everything already placed in the world 
+void drawBlocks() {
+
+  // Normal blocks
+  for (Block b : onScreenBlocks) {
+    b.display();
+  }
+  // Spike blocks
+  for (SpikeBlock s : spikeBlocks) {
+    s.display();
+  }
+
+  // PowerUps
+  for (PowerUp p : powerUps) {
+    p.display();
+  }
+}
+
+// DRAW PLACEMENT PREVIEW
+// Shows a see through preview of blocks, spikes, and powerups
+// Helps the player see where an item will go before placing it
+void drawPlacementPreview() {
+
+    // Only show preview in the world area
+  if (mouseX < width - sidePanelWidth) {
+   
+    // Block preview
+    if (holdingBlock) {
+      fill(100, 200, 100, 120);  
+      rect(mouseX, mouseY, 50, 50);
+    }
+   // Spike preview
+    if (holdingSpike) {
+      fill(200, 50, 50, 120);  
+      triangle(
+        mouseX, mouseY + 50,     
+        mouseX + 25, mouseY,     
+        mouseX + 50, mouseY + 50 
+      );
+    }
+
+   // PowerUps preview
+   // Speed PowerUp preview
+    if (holdingSpeedPowerUp) {
+       fill(0,200,255);
+      ellipse(mouseX, mouseY, 20, 20);
+    }
+    
+    // Bomb PowerUp preview
+    if (holdingBombPowerUp) {
+      fill(134, 41, 27, 120);  
+      ellipse(mouseX, mouseY, 20, 20);
+
+     //ellipse(300,200,255,80);
+     //ellipse(mouseX, mouseY + 50, mouseX + 50, mouseY);
+     }
+    
+  }
+}
+
+// BUILD MODE END
+
+// PLAY MODE
+// Runs the play mode where both players move and interact
+// Shows blocks, spikes, powerups, and checks for finish contact
+void drawPlayMode() {
+
+  background(200);
+
+  // Draws start and finish platforms and flags
+  drawStartFinish();
+
+  // Shows all blocks placed in the level
+  for (Block b : onScreenBlocks) {
+    b.display();
+  }
+
+   // Shows all spikes placed in the level
+  for (SpikeBlock s : spikeBlocks) {
+    s.display();
+  }
+   // Shows all powerups placed in the level
+  for (PowerUp p : powerUps) {
+    p.display();
+  }
+
+  // Updates both players with movement and gravity
+  redPlayer.update();
+  bluePlayer.update();
+
+  // Draws both players on screen
+  redPlayer.drawPlayer();
+  bluePlayer.drawPlayer();
+
+  // Checks if either player reached the finish box
+  checkFinishReached();
+
+  // Shows a small reminder to go back to build mode
+  fill(0);
+  textSize(30); 
+  text("Press B to Build", 130, 40);
+}
+
+// PLAY MODE END 
+
+// SAVE & LOAD SYSTEM
+// Saves all blocks, spikes, and powerups into a file
+// Helps keep the level setup for later testing
+void saveLevel() {
+
+  if (onScreenBlocks.size() == 0 && spikeBlocks.size() == 0) {
+    println("No blocks to save.");
+    return;
+  }
+
+  String[] data = new String[onScreenBlocks.size() + spikeBlocks.size() + powerUps.size()];
+
+  int index = 0; 
+
+  // Saves block positions
+  for (Block b : onScreenBlocks) {
+    data[index] = "B," + b.x + "," + b.y;
+    index++;
+  }
+
+  // Saves spike positions
+  for (SpikeBlock s : spikeBlocks) {
+    data[index] = "S," + s.x + "," + s.y;
+    index++;
+  }
+
+  // Saves powerups positions
+  for (PowerUp p : powerUps) {
+    data [index] = "P," + p.x + "," + p.y;
+    index++;
+  }
+
+  String fullPath = dataPath("savedState.txt");
+
+  saveStrings(fullPath, data);
+
+  println("Saved " + data.length + " items");
+  println("Saved to: " + fullPath);
+}
+
+// Loads saved blocks, spikes, and powerups from file
+// Clears old ones and rebuilds them in the level
+void loadLevel() {
+
+  String fullPath = dataPath("savedState.txt");
+
+  String[] data = loadStrings(fullPath);
+
+  if (data == null) {
+    println("No save file found.");
+    return;
+  }
+
+  onScreenBlocks.clear();
+  spikeBlocks.clear();
+  powerUps.clear();
+
+  for (String line : data) {
+
+    if (line != null && line.length() > 0) {
+
+      String[] parts = split(line, ",");
+
+      if (parts[0].equals("B")) {
+        float x = float(parts[1]);
+        float y = float(parts[2]);
+        onScreenBlocks.add(new Block(x, y, 100, 200, 100));
+      }
+
+      if (parts[0].equals("S")) {
+        float x = float(parts[1]);
+        float y = float(parts[2]);
+        spikeBlocks.add(new SpikeBlock(x, y));
+      }
+      if (parts[0].equals("P")) {
+        float x = float (parts[1]);
+        float y = float(parts[2]);
+        powerUps.add(new PowerUp(x,y));
+        powerUps.add(new SpeedPowerUp(x,y));
+        powerUps.add(new BombPowerUp(x,y));
+      }
+    }
+  }
+
+  println("Loaded " + data.length + " items");
+  println("Loaded from: " + fullPath);
+}
+
+// SAVE & LOAD SYSTEM END
