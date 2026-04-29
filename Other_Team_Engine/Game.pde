@@ -2,6 +2,17 @@
 UI ui;
 TurnSystem ts;
 
+// Gamble System
+GambleSystem gamble;
+
+// game states to make things run smootly
+int gameState;
+
+final int STATE_MENU = 0;
+final int STATE_PLAY = 1;
+final int STATE_WIN = 2;
+final int STATE_LOSE = 3;
+
 Card[] enemyCard = new Card[5];
 ArrayList<Card> enemyCards = new ArrayList<Card>();
 ArrayList<Card> defaultCard = new ArrayList<Card>();
@@ -22,6 +33,10 @@ int defaultHP = 20, baseCardTotal = 5;
 int enemyCardValue = 0;
 
 void setup() {
+ 
+  // Gamble system for setup
+  gamble = new GambleSystem();
+  
   pixelDensity(1);
   size(1500,1000);
   //fullScreen();
@@ -67,40 +82,108 @@ void setup() {
   enemy = new Enemy();
   
   //collisions = new Collisions();
+  
+  gameState = STATE_MENU;
 }
 
-void draw() {
+void drawGame() {
   background(100);
   
-  //Draws the zones to the screen using the method in the Zone class
+  if (gameState == STATE_MENU) {
+    drawMenu();
+    return;
+  }
+  else if (gameState == STATE_PLAY) {
+    // DO NOTHING HERE (this is the actual game rendering below)
+  }
+  else if (gameState == STATE_WIN) {
+    drawWin();
+    return;
+  }
+  else if (gameState == STATE_LOSE) {
+    drawLose();
+    return;
+  }
+
+  // --- GAME RUNS ONLY IN PLAY STATE ---
+
   for (int i = 0; i < zones.length; i++){
-      zones[i].zonesDisplay();
+    zones[i].zonesDisplay();
   }
-  //Displays enemy cards and handles other methods of enemy cards
+
   for (int i = 0; i < enemyCard.length; i++) {
-        enemyCard[i].run();
+    enemyCard[i].run();
   }
-  //Displays player cards and handles other methods of player cards
+
   for (int i = 0; i < defaultCard.size(); i++){
     Card dC = defaultCard.get(i);
     dC.run();
-    //defaultCard[i].run();
   }
-  //Displays enemy cards and handles other methods of enemy cards
+
   for (int i = 0; i < enemyCards.size(); i++){
     Card eC = enemyCards.get(i);
     eC.isEnemy = true;
     eC.run();
-    //defaultCard[i].run();
   }
-  
-  // Shows both decks, runs the ui methods and ends the turn for the player when done
+
   enemyDeck.showDeck();
   playerDeck.showDeck();
   ui.run();
   enemy.updateTurn();
   ts.gameOverDisplay();
   ts.isGameOver();
+
+  gamble.display();
+}
+
+void drawMenu() {
+  background(50);
+
+  fill(255);
+  textSize(60);
+  text("Card Game", width/2, height/3);
+
+  fill(0, 200, 0);
+  rect(width/2 - 150, height/2, 300, 100);
+
+  fill(255);
+  textSize(30);
+  text("Press to Play", width/2, height/2 + 60);
+}
+
+void drawWin() {
+  background(0, 150, 255);
+
+  fill(255);
+  textSize(60);
+  text("YOU WIN", width/2, height/3);
+
+  fill(0, 200, 0);
+  rect(width/2 - 150, height/2, 300, 100);
+
+  fill(255);
+  textSize(25);
+  text("Replay", width/2, height/2 + 60);
+}
+
+void drawLose() {
+  background(150, 0, 0);
+
+  fill(255);
+  textSize(60);
+  text("YOU LOSE", width/2, height/3);
+
+  fill(0, 200, 0);
+  rect(width/2 - 150, height/2, 300, 100);
+
+  fill(255);
+  textSize(25);
+  text("Replay", width/2, height/2 + 60);
+}
+
+void draw() {
+  drawGame();
+
 }
 
 void mousePressed() {
