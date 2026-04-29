@@ -1,5 +1,7 @@
 //---------------------------------------------------
 
+//---------------------------------------------------
+
 class Card {
   //variables for our cards
   int cardValue = int(random(1, 10)), damage = cardValue; //random values
@@ -100,6 +102,12 @@ class Card {
   }
   
   void mousePressed() {
+    
+      // FIRST: if gamble is open, ONLY allow gamble input
+  if (gamble.showGamble) {
+    gamble.mousePressed();
+    return; // THIS STOPS EVERYTHING ELSE
+  }
     //println("hardy har har");
     //checks if the card is hovering and if its in not in a zone already then it starts dragging
     if (this.isHovering && !inZone) {
@@ -144,6 +152,11 @@ class Card {
   
   //releases the card by making isdraggingcard false
   void mouseReleased() {
+    
+     if (gamble.showGamble) return; // block release actions
+    
+    
+    
     if (this.isDraggingCard) {
       this.isDraggingCard = false;
     }
@@ -370,7 +383,8 @@ class Deck {
 
           ts.canRedraw = false;
         }
-      } /*else {
+      } 
+      /*else {
         //Deal Card, creating a new instance of a card object to be placed on the player's side of "play area"
         for (int i = 0; i < baseCardTotal; i++) {
           if (i == 0) {
@@ -539,7 +553,7 @@ void addEffects() {
 
 //To create the logic of the effects you created in "addEffects"
 void run() {
-  
+
 }
 
 //----------------------------------------------------
@@ -664,16 +678,12 @@ class TurnSystem {
 
   //if any player or enemy reaches zero it will tell you if you won or not
   void isGameOver() {
-    if (player.playerHP <= 0) {
-      //game over
-      gameOverColor = color (155, 55, 55);
-      gameOverText = "You Lose...";
-    }
-    if (enemy.enemyHP <= 0) {
-      //game over, make sure it doesnt run the end turn function
-      gameOverColor = color (13, 12, 200);
-      gameOverText = "You Win";
-    }
+   if (player.playerHP <= 0) {
+  gameState = STATE_LOSE;
+}
+if (enemy.enemyHP <= 0) {
+  gameState = STATE_WIN;
+}
 
     if (startOfGame) {
       playerDeck.playerDraw();
@@ -687,6 +697,8 @@ class TurnSystem {
     if (playerIsAttacking && !playerTurn && currentEnemyTarget != null) {
       currentPlayerAttackingCard.cardValue -= currentEnemyTarget.damage;
       currentEnemyTarget.cardValue -= currentPlayerAttackingCard.damage;
+      // Gamble system TurnSystem.calcWinner()
+      gamble.trigger();
       playerIsAttacking = false;
 
       for (Card currentCard : defaultCard) {
@@ -784,6 +796,29 @@ class UI {
 
   void mousePressed()
   {
+   // MENU CLICK
+if (gameState == STATE_MENU) {
+  if (mouseX > width/2 - 150 && mouseX < width/2 + 150 &&
+      mouseY > height/2 && mouseY < height/2 + 100) {
+
+    resetGame();
+    gameState = STATE_PLAY;
+  }
+  return;
+}
+
+// WIN / LOSE CLICK (Replay)
+if (gameState == STATE_WIN || gameState == STATE_LOSE) {
+  if (mouseX > width/2 - 150 && mouseX < width/2 + 150 &&
+      mouseY > height/2 && mouseY < height/2 + 100) {
+
+    resetGame();
+    gameState = STATE_MENU;
+  }
+  return;
+} 
+    
+    
     if (insideButton == true)
     {
       c = color(255, 0, 0);
@@ -792,6 +827,24 @@ class UI {
     }
   }
 }
+
+void resetGame() {
+  player = new Player();
+  enemy = new Enemy();
+
+  defaultCard.clear();
+  enemyCards.clear();
+
+  ts = new TurnSystem();
+
+  // reset zones
+  for (int i = 0; i < zones.length; i++) {
+    zones[i].occupied = false;
+  }
+   // ADD THIS
+  gamble = new GambleSystem(); // FULL reset of gamble UI
+}
+
 
 //--------------------------------------------------
 
