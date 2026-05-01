@@ -1,7 +1,10 @@
+int yOffset = 250; // change this number to move it up/down
+
+// gamble system
 class GambleSystem {
 
   boolean showGamble = false;
-  boolean gambleResolved = false;
+  boolean gambleResolved = false; 
 
   int boxWidth = 150;
   int boxHeight = 80;
@@ -21,37 +24,38 @@ class GambleSystem {
     // Text
     fill(255);
     textSize(40);
-    text("Want to take a gamble?", width/2, height/2 - 100);
+text("Want to take a gamble? You could lose a health but the UI can lose a health too", width/2, height/2 - 100 + yOffset);
 
     // YES (Green)
     fill(0, 200, 0);
-    rect(width/2 - 200, height/2, boxWidth, boxHeight);
-
+    rect(width/2 - 200, height/2 + yOffset, boxWidth, boxHeight);
+    
     fill(255);
     textSize(25);
-    text("YES", width/2 - 125, height/2 + 45);
-
+   text("YES", width/2 - 125, height/2 + 45 + yOffset);
+   
     // NO (Red)
     fill(200, 0, 0);
-    rect(width/2 + 50, height/2, boxWidth, boxHeight);
+    rect(width/2 + 50, height/2 + yOffset, boxWidth, boxHeight);
+
 
     fill(255);
-    text("NO", width/2 + 125, height/2 + 45);
+    text("NO", width/2 + 125, height/2 + 45 + yOffset);
   }
 
   void mousePressed() {
     if (!showGamble) return;
 
-    // YES CLICK
+    // YES CLICK GAMBLE SYSTEM // checks if mouse is in the zone
     if (mouseX > width/2 - 200 && mouseX < width/2 - 200 + boxWidth &&
-        mouseY > height/2 && mouseY < height/2 + boxHeight) {
+        mouseY > height/2 + yOffset && mouseY < height/2 + boxHeight + yOffset) {
 
       resolveGamble();
     }
 
-    // NO CLICK
+    // NO CLICK GAMBLE SYSTEM // checks if mouse is in the zone
     if (mouseX > width/2 + 50 && mouseX < width/2 + 50 + boxWidth &&
-        mouseY > height/2 && mouseY < height/2 + boxHeight) {
+        mouseY > height/2 + yOffset && mouseY < height/2 + boxHeight + yOffset) {
 
       showGamble = false;
     }

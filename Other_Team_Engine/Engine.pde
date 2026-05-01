@@ -103,10 +103,10 @@ class Card {
   
   void mousePressed() {
     
-      // FIRST: if gamble is open, ONLY allow gamble input
+      // first: if gamble is open, only allow gamble input
   if (gamble.showGamble) {
     gamble.mousePressed();
-    return; // THIS STOPS EVERYTHING ELSE
+    return; // This stops everything else
   }
     //println("hardy har har");
     //checks if the card is hovering and if its in not in a zone already then it starts dragging
@@ -153,6 +153,7 @@ class Card {
   //releases the card by making isdraggingcard false
   void mouseReleased() {
     
+    // Gamble system
      if (gamble.showGamble) return; // block release actions
     
     
@@ -697,7 +698,7 @@ if (enemy.enemyHP <= 0) {
     if (playerIsAttacking && !playerTurn && currentEnemyTarget != null) {
       currentPlayerAttackingCard.cardValue -= currentEnemyTarget.damage;
       currentEnemyTarget.cardValue -= currentPlayerAttackingCard.damage;
-      // Gamble system TurnSystem.calcWinner()
+      // Gamble system calcWinner()
       gamble.trigger();
       playerIsAttacking = false;
 
@@ -841,7 +842,7 @@ void resetGame() {
   for (int i = 0; i < zones.length; i++) {
     zones[i].occupied = false;
   }
-   // ADD THIS
+   // Gamble system
   gamble = new GambleSystem(); // FULL reset of gamble UI
 }
 
