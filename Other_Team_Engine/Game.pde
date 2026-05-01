@@ -132,8 +132,7 @@ void drawGame() {
   enemy.updateTurn();
   ts.gameOverDisplay();
   ts.isGameOver();
-
-  gamble.display();
+  gamble.display(); // Gamble system 
 }
 
 void drawMenu() {
