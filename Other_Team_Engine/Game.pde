@@ -150,6 +150,7 @@ void drawMenu() {
   text("Press to Play", width/2, height/2 + 60);
 }
 
+// Win Screen 
 void drawWin() {
   background(0, 150, 255);
 
@@ -165,6 +166,7 @@ void drawWin() {
   text("Replay", width/2, height/2 + 60);
 }
 
+// Lose Screen 
 void drawLose() {
   background(150, 0, 0);
 
