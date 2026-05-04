@@ -18,7 +18,7 @@ class Card {
   float xPos, yPos;
 
   float startX, startY;
-  int cardHealth; //int to track the card's health
+  int cardHealth; //int to track the cards health
   
   int tombstoneXPos = 25;
   int tombstoneYPos = height/2 - 150;
@@ -54,7 +54,7 @@ class Card {
     damage = cardValue;
   }
   
-  // when dragging the card you selected it will use your mousex and mousey to update to that location
+  // when dragging the card you selected it will use your mouse x and mouse y to update to that location
   void display() {
     if (this.isDraggingCard)
     {
@@ -99,9 +99,56 @@ class Card {
       
       //this.inZone = false;
     }
+    // RECOVERY PROMPT
+if (gamble.showRecoveryPrompt) {
+  fill(0, 0); // color background
+  rect(0, 0, width, height); // size to fix the color background
+
+  fill(255);
+  textSize(40);
+ text("Want to gain back health?", width/2, height/2 - 50 + y);
+
+  // YES
+  fill(0, 200, 0);
+rect(width/2 - 200, height/2 + y, gamble.boxWidth, gamble.boxHeight);
+  fill(255);
+  text("YES", width/2 - 125, height/2 + 50 + y);
+
+  // NO
+  fill(200, 0, 0);
+  rect(width/2 + 50, height/2 + y, gamble.boxWidth, gamble.boxHeight);
+  fill(255);
+  text("NO", width/2 + 125, height/2 + 50 + y);
+}
+    
+    
   }
   
   void mousePressed() {
+    
+     // RECOVERY PROMPT CLICK
+  if (gamble.showRecoveryPrompt) {
+
+    // player picks YES start mini game
+    if (mouseX > width/2 - 200 && mouseX < width/2 - 200 + gamble.boxWidth &&
+        mouseY > height/2 && mouseY < height/2 + gamble.boxHeight + y) {
+
+      gamble.showRecoveryPrompt = false;
+      gamble.showMiniGame = true;
+      gamble.miniGameProgress = 0;
+      gamble.miniGameTimer = 0;
+    }
+
+    // player picks NO go back to game
+    if (mouseX > width/2 + 50 && mouseX < width/2 + 50 + gamble.boxWidth &&
+        mouseY > height/2 && mouseY < height/2 + gamble.boxHeight + y) {
+
+      gamble.showRecoveryPrompt = false;
+    }
+
+    return; // stop other clicks
+  }
+    
     
       // first: if gamble is open, only allow gamble input
   if (gamble.showGamble) {
@@ -154,7 +201,7 @@ class Card {
   void mouseReleased() {
     
     // Gamble system
-     if (gamble.showGamble) return; // block release actions
+     if (gamble.showGamble || gamble.showRecoveryPrompt || gamble.showMiniGame || gamble.showResultScreen) return; // block release actions
     
     
     
@@ -753,6 +800,66 @@ class UI {
 
   void display() {
 
+    // RESULT SCREEN
+if (gamble.showResultScreen) {
+
+ if (gamble.miniGameWon) {
+    background(0, 200, 0); // green = win
+    textSize(40);
+    text("GOOD JOB! +5 HP", width/2, height/2);
+  } else {
+    background(200, 0, 0); // red = lose
+    textSize(40);
+    text("FAILED! -5 HP", width/2, height/2);
+  }
+
+// button to return
+  fill(255);
+  rect(width/2 - 200, height/2 + 100, 400, 80);
+  fill(0);
+  text("Back to Game", width/2, height/2 + 150);
+}
+    
+    
+    // MINI GAME
+if (gamble.showMiniGame) {
+
+  background(50);
+
+  fill(255);
+  textSize(30);
+  text("SPAM Space Bar key to rise bar!", width/2, 100);
+
+  // empty bar
+  fill(100);
+  rect(width/2 - 200, height/2, 400, 40);
+
+// filled bar (progress increases when pressing space)
+  fill(0, 255, 0);
+  rect(width/2 - 200, height/2, gamble.miniGameProgress * 4, 40);
+
+  // timer countdown
+  fill(255);
+  text("Time: " + (gamble.miniGameTimeLimit - gamble.miniGameTimer) / 60, width/2, 200);
+
+  gamble.miniGameTimer++;
+
+  // when time runs out → decide result
+  if (gamble.miniGameTimer >= gamble.miniGameTimeLimit) {
+    
+    gamble.showMiniGame = false;
+    gamble.showResultScreen = true;
+
+    if (gamble.miniGameProgress >= gamble.miniGameGoal) {
+      gamble.miniGameWon = true;
+      player.playerHP += 5; // reward
+    } else {
+      gamble.miniGameWon = false;
+      player.playerHP -= 5; // penalty
+    }
+  }
+}
+    
     stroke(c);
     strokeWeight(sw);
     
@@ -797,6 +904,15 @@ class UI {
 
   void mousePressed()
   {
+   if (gamble.showResultScreen) {
+  if (mouseX > width/2 - 200 && mouseX < width/2 + 200 &&
+      mouseY > height/2 + 100 && mouseY < height/2 + 180) {
+
+    gamble.showResultScreen = false;
+  }
+}
+    
+    
    // MENU CLICK
 if (gameState == STATE_MENU) {
   if (mouseX > width/2 - 150 && mouseX < width/2 + 150 &&
