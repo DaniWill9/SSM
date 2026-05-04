@@ -150,6 +150,7 @@ void drawMenu() {
   text("Press to Play", width/2, height/2 + 60);
 }
 
+// Win Screen 
 void drawWin() {
   background(0, 150, 255);
 
@@ -165,6 +166,7 @@ void drawWin() {
   text("Replay", width/2, height/2 + 60);
 }
 
+// Lose Screen 
 void drawLose() {
   background(150, 0, 0);
 
@@ -190,7 +192,7 @@ void mousePressed() {
   playerDeck.mousePressed();
   //pCard1.mousePressed();
   
-  //allows the cards to be pressed and hovered on the mousex and mousey
+  //allows the cards to be pressed and hovered on the mouse x and mouse y
   ui.mousePressed();
   for (int i = 0; i < defaultCard.size(); i++) {
     Card dC = defaultCard.get(i);
@@ -199,7 +201,7 @@ void mousePressed() {
     //defaultCard[i].run();
     //defaultCard[i].mousePressed();
   }
-  //allows the cards to be pressed and hovered on the mouseX and mouseY
+  //allows the cards to be pressed and hovered on the mouse X and mouse Y
   for (int i = 0; i < enemyCards.size(); i++) {
     Card eC = enemyCards.get(i);
     eC.run();
@@ -239,4 +241,23 @@ void keyPressed(){
     //dC.keyPressed();
     //defaultCard[i].keyPressed();
   }
+  
+  // only allow input during mini game
+   if (gamble.showMiniGame) {
+  if (key == ' ') {
+    gamble.miniGameProgress += 2; //  increase bar when pressing space
+  }
+}
+
+  //  clamp + win condition inside minigame
+  if (gamble.miniGameProgress >= gamble.miniGameGoal) {
+    gamble.miniGameProgress = gamble.miniGameGoal;
+
+  gamble.showMiniGame = false;
+  gamble.showResultScreen = true;
+  gamble.miniGameWon = true;
+
+  player.playerHP += 5; // win reward
+}
+  
 }
