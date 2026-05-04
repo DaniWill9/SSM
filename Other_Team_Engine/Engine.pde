@@ -811,6 +811,8 @@ if (gamble.showResultScreen) {
     background(200, 0, 0); // red = lose
     textSize(40);
     text("FAILED! -5 HP", width/2, height/2);
+      fill(0);
+  text("Use the mouse to click on the box", width/2, height/2 + 250);
   }
 
 // button to return
@@ -818,6 +820,8 @@ if (gamble.showResultScreen) {
   rect(width/2 - 200, height/2 + 100, 400, 80);
   fill(0);
   text("Back to Game", width/2, height/2 + 150);
+  fill(0);
+  text("Use the mouse to click on the box", width/2, height/2 + 250);
 }
     
     
