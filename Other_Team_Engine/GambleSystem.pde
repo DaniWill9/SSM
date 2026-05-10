@@ -1,10 +1,12 @@
 int yOffset = 250; // change this number to move it up/down for gamble screen 
-int recoveryYOffset = 150; // change this number to move it up/down for mini game screen 
-int y = recoveryYOffset;
+int minigameYOffset = 150; // change this number to move it up/down for mini game screen 
+int y = minigameYOffset;
 
 // gamble system
 class GambleSystem {
 
+  boolean spaceHeld = false;
+  
   boolean showGamble = false;  // controls gamble YES/NO screen
   boolean gambleResolved = false; 
 
@@ -41,7 +43,7 @@ int miniGameTimeLimit = 10 * 60; // time limit for bar/ 10 seconds (60 FPS)
     // Text
     fill(255);
     textSize(40);
-    text("Want to take a gamble? You or UI could lose a health ", width/2, height/2 - 100 + yOffset);
+    text("Want to take a gamble? You or enemy could lose a health ", width/2, height/2 - 100 + yOffset);
 
     // YES (Green) gamble screen
     fill(0, 200, 0);
@@ -79,15 +81,30 @@ int miniGameTimeLimit = 10 * 60; // time limit for bar/ 10 seconds (60 FPS)
   }
 
   void resolveGamble() {
-    int chance = int(random(0, 2)); // 50/50 outcome
 
-    if (chance == 0) {
-      player.playerHP -= 5; // BAD/ player loses HP
-    } else {
-      enemy.enemyHP -= 5;   // GOOD/ enemy loses HP
-    }
+  // number from 0 to 99
+  int chance = int(random(100));
 
-    showGamble = false;         // close gamble
-    showRecoveryPrompt = true;  // open recovery screen
+  // 70% chance player loses HP
+  if (chance < 70) {
+    player.playerHP -= 5;
+    
+    // ONLY show recovery prompt if player lost HP in the gamble state
+    showRecoveryPrompt = true;
+    
+  }
+
+  // 30% chance enemy loses HP
+  else {
+    enemy.enemyHP -= 5;
+    
+     // make sure everything stays off
+    showRecoveryPrompt = false;
+    showMiniGame = false;
+    showResultScreen = false;
+    
+  }
+    showGamble = false; // close gamble
+   
   }
 }

@@ -242,22 +242,29 @@ void keyPressed(){
     //defaultCard[i].keyPressed();
   }
   
-  // only allow input during mini game
-   if (gamble.showMiniGame) {
-  if (key == ' ') {
-    gamble.miniGameProgress += 2; //  increase bar when pressing space
+// only allow input during mini game
+if (gamble.showMiniGame && key == ' ') {
+
+  // prevent holding key
+  if (!gamble.spaceHeld) {
+
+    gamble.spaceHeld = true;
+
+    gamble.miniGameProgress += 2;  // 2 is do able but can make it harder or not
+
+    // clamp progress
+    if (gamble.miniGameProgress > gamble.miniGameGoal) {
+      gamble.miniGameProgress = gamble.miniGameGoal;
+    }
   }
 }
 
-  //  clamp + win condition inside minigame
-  if (gamble.miniGameProgress >= gamble.miniGameGoal) {
-    gamble.miniGameProgress = gamble.miniGameGoal;
-
-  gamble.showMiniGame = false;
-  gamble.showResultScreen = true;
-  gamble.miniGameWon = true;
-
-  player.playerHP += 5; // win reward
-}
   
+}
+
+void keyReleased() {
+
+  if (key == ' ') {
+    gamble.spaceHeld = false;
+  }
 }

@@ -137,6 +137,7 @@ rect(width/2 - 200, height/2 + y, gamble.boxWidth, gamble.boxHeight);
       gamble.showMiniGame = true;
       gamble.miniGameProgress = 0;
       gamble.miniGameTimer = 0;
+      gamble.spaceHeld = false;
     }
 
     // player picks NO go back to game
@@ -842,13 +843,25 @@ if (gamble.showMiniGame) {
   fill(0, 255, 0);
   rect(width/2 - 200, height/2, gamble.miniGameProgress * 4, 40);
 
+
+// instantly win if bar becomes full
+if (gamble.miniGameProgress >= gamble.miniGameGoal) {
+
+  gamble.showMiniGame = false;
+  gamble.showResultScreen = true;
+
+  gamble.miniGameWon = true;
+
+  player.playerHP += 5;
+}
+
   // timer countdown
   fill(255);
   text("Time: " + (gamble.miniGameTimeLimit - gamble.miniGameTimer) / 60, width/2, 200);
 
   gamble.miniGameTimer++;
 
-  // when time runs out → decide result
+  // when time runs out it decide result 
   if (gamble.miniGameTimer >= gamble.miniGameTimeLimit) {
     
     gamble.showMiniGame = false;
@@ -856,10 +869,10 @@ if (gamble.showMiniGame) {
 
     if (gamble.miniGameProgress >= gamble.miniGameGoal) {
       gamble.miniGameWon = true;
-      player.playerHP += 5; // reward
+      player.playerHP += 5; // reward if player wins the minigame
     } else {
       gamble.miniGameWon = false;
-      player.playerHP -= 5; // penalty
+      player.playerHP -= 5; // penalty if player loses the minigame
     }
   }
 }
