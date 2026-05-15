@@ -21,6 +21,8 @@ class SpikeBlock {
   void display() {
     fill(200, 50, 50);  // red color
 
+  stroke (0, 0, 0);
+
     // Triangle pointing upward
     triangle(
       x, y + h,   // left bottom

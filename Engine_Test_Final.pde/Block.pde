@@ -16,7 +16,7 @@ class Block {
   int r, g, b;
 
   // Constructor
-  // Sets up the block’s position and color
+  // Sets up the blocks position and color
   Block(float x, float y, int r, int g, int b) {
     this.x = x;   // X position
     this.y = y;   // Y position
@@ -29,6 +29,7 @@ class Block {
   // Draws the block as a colored rectangle on screen
   void display() {
     fill(r, g, b);   // Apply color
+    stroke (0, 0, 0);
     rect(x, y, w, h); // Draw the block shape
   }
 }

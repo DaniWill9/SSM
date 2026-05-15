@@ -284,6 +284,7 @@ void drawWinScreen() {
   
   // Black box under winner text
   fill(0);
+  stroke (0, 0, 0);
   rect(width/2 - 150, 200, 300, 60);
 
   fill(255);

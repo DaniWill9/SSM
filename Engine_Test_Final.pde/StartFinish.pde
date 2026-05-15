@@ -47,10 +47,12 @@ void drawStartFinish() {
 
   // Start flag (green)
   fill(0, 200, 0);
+  stroke (0, 0, 0);
   rect(startX - 10, startY - 40, 20, 40);
 
   // Finish flag (yellow)
   fill(255, 220, 0);
+  stroke (0, 0, 0);
   rect(finishX - 10, finishY - 40, 20, 40);
 }
 

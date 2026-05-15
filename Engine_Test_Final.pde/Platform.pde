@@ -19,6 +19,7 @@ class Platform {
   // Draws the platform as a black rectangle
   void drawPlatform() {
       fill(0);          // black color
+   stroke (0, 0, 0);
     rect(x, y, w, h); // draw shape
   }
 }

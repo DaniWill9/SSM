@@ -19,6 +19,7 @@ class Beam {
 //shows beam 
   void display() {
     fill(0);
+    stroke (0, 0, 0);
     rect(x, y, 10, 10); //beam
   }
 

@@ -224,6 +224,7 @@ class Player {
   // Draws the player as a simple rectangle
   void drawPlayer() {
     fill(col);
+    stroke (0, 0, 0);
     rect(x, y, w, h);
   }
 }

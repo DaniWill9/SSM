@@ -18,6 +18,7 @@ class Caster {
   void display() {
     //Caster
     fill(50);
+    stroke (0, 0, 0);
     rect(x-15, y-15, 30, 30); 
 
     // Draw beam only in play mode
