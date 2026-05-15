@@ -634,19 +634,21 @@ class Enemy {
   void updateTurn() {
     if (!ts.playerTurn) {
       //Enemy Draws card
-      //enemyDeck.enemyDraw();
-
-      //for (int i = 0; i < zones.length; i++) {
-      //  enemyCard[i].xPos = zones[i].enemyZoneX;
-      //  enemyCard[i].yPos = zones[i].enemyZoneY;
-      //  enemyCard[i].inZone = true;
-      //}
-      //for (Card eCards : enemyCards) {
-      //  //if (currentCard.selectedCard) {
-      //  //  ts.currentPlayerAttackingCard = currentCard;
-      //  //}
-      //  eCards.xPos = zones
-      //}
+      enemyDeck.enemyDraw();
+      /*
+      for (int i = 0; i < zones.length; i++) {
+        enemyCard[i].xPos = zones[i].enemyZoneX;
+        enemyCard[i].yPos = zones[i].enemyZoneY;
+        enemyCard[i].inZone = true;
+      }
+      for (Card eCards : enemyCards) {
+        if (currentCard.selectedCard) {
+        ts.currentPlayerAttackingCard = currentCard;
+      }
+      eCards.xPos = zones;
+     }
+     */
+    
       for (int i = 0; i < zones.length; i++) {
         Card eC = enemyCards.get(i);
         if (!eC.isDestroyed) {

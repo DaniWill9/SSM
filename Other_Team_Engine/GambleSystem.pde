@@ -1,4 +1,4 @@
-int yOffset = 250; // change this number to move it up/down for gamble screen 
+   int yOffset = 250; // change this number to move it up/down for gamble screen 
 int recoveryYOffset = 150; // change this number to move it up/down for mini game screen 
 int y = recoveryYOffset;
 

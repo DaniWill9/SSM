@@ -1,4 +1,4 @@
-//Calling objects
+ //Calling objects
 UI ui;
 TurnSystem ts;
 
@@ -6,7 +6,7 @@ TurnSystem ts;
 GambleSystem gamble;
 
 // game states to make things run smootly
-int gameState;
+int gameState = 4;
 
 final int STATE_MENU = 0;
 final int STATE_PLAY = 1;
