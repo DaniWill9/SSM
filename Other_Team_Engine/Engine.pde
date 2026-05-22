@@ -939,19 +939,19 @@ if (gamble.showDiceGame) {
  // Keeps player inside of dice screen
 if (dice.finished) {
 
-  // WIN
+  // WIN playerRoll = int(random(1, 7)); // numbers goes from 1 - 6
   if (dice.playerRoll > dice.enemyRoll) {
 
     gamble.miniGameWon = true;
   }
 
-  // LOSE
+  // LOSE enemyRoll = int(random(1, 7)); // numbers goes from 1 - 6
   else if (dice.playerRoll < dice.enemyRoll) {
 
     gamble.miniGameWon = false;
   }
 
-  // DRAW
+  // DRAW dectects when both player and enemy have the same number
   else {
 
     gamble.miniGameWon = false;

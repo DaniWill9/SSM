@@ -12,7 +12,7 @@ diceMG dice;
 boolean turnEnded, lastTurn, isFinish;
 
 // mini game generator
-final int Gamble_Chance = 0;
+final int Gamble_Chance = 0; 
 final int Health_Regen = 1;
 final int Dice = 2;
 
