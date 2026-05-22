@@ -259,5 +259,8 @@ void keyPressed(){
 
   player.playerHP += 5; // win reward
 }
-  
+
+//matchGame
+if (key == 'm' || key == 'M'){
+    showMatchGame = true; 
 }
