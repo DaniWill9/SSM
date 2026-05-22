@@ -2,6 +2,7 @@
 
 //---------------------------------------------------
 
+// Main card class that handles card visuals, movement, combat, and interactions
 class Card {
   //variables for our cards
   int cardValue = int(random(1, 10)), damage = cardValue; //random values
@@ -10,7 +11,8 @@ class Card {
   boolean selectedCard;
   boolean isAttacking; //boolean to track whether a card is attacking
   boolean inZone; //boolean to track if a card is in a zone
-  boolean isEnemy, isPlayer;
+  boolean isEnemy, isPlayer; 
+  
   /* so we dont just have a bunch of random numbers and the card look stay's consistent
    edit these values to change how the card looks/position etc */
   int cardNumSize = 25;
@@ -82,6 +84,7 @@ class Card {
   }
   
   //sends the card to the tombstone and if the card is not a player card and not destroyed
+  // or in short it handles destroyed cards and sends them to the graveyard area
   void goToTombstone() {
     if (cardValue <= 0 && !isEnemy && !this.isDestroyed) {
       player.playerHP -= 5;
@@ -99,6 +102,7 @@ class Card {
       
       //this.inZone = false;
     }
+    
     // RECOVERY PROMPT
 if (gamble.showRecoveryPrompt) {
   fill(0, 0); // color background
@@ -126,19 +130,48 @@ rect(width/2 - 200, height/2 + y, gamble.boxWidth, gamble.boxHeight);
   
   void mousePressed() {
     
+    // BLOCK GAME INPUT DURING MINI GAMES
+if (gamble.showMiniGame || gamble.showDiceGame || gamble.showResultScreen) {
+  ui.mousePressed();
+  return;
+}
+    
      // RECOVERY PROMPT CLICK
   if (gamble.showRecoveryPrompt) {
 
-    // player picks YES start mini game
-    if (mouseX > width/2 - 200 && mouseX < width/2 - 200 + gamble.boxWidth &&
-        mouseY > height/2 && mouseY < height/2 + gamble.boxHeight + y) {
+   // player picks YES start RANDOM mini game
+if (mouseX > width/2 - 200 && mouseX < width/2 - 200 + gamble.boxWidth &&
+    mouseY > height/2 && mouseY < height/2 + gamble.boxHeight + y) {
 
-      gamble.showRecoveryPrompt = false;
-      gamble.showMiniGame = true;
-      gamble.miniGameProgress = 0;
-      gamble.miniGameTimer = 0;
-      gamble.spaceHeld = false;
-    }
+  gamble.showRecoveryPrompt = false;
+
+  // RANDOMLY PICK A MINI GAME 
+  // int(random(2)) and 0 = space bar mini game and 1 = dice miningame 
+  // Both have a 50/50 chance to pick one of the mini games
+  gamble.selectedMiniGame = int(random(2));
+
+  // =========================
+  // SPACE BAR KEY MINI GAME
+  // =========================
+  if (gamble.selectedMiniGame == 0) {
+
+    gamble.showMiniGame = true;
+
+    gamble.miniGameProgress = 0;
+    gamble.miniGameTimer = 0;
+    gamble.spaceHeld = false;
+  }
+
+  // =========================
+  // DICE MINI GAME
+  // =========================
+  else {
+
+    gamble.showDiceGame = true;
+
+    dice = new diceMG();
+  }
+}
 
     // player picks NO go back to game
     if (mouseX > width/2 + 50 && mouseX < width/2 + 50 + gamble.boxWidth &&
@@ -199,10 +232,11 @@ rect(width/2 - 200, height/2 + y, gamble.boxWidth, gamble.boxHeight);
   }
   
   //releases the card by making isdraggingcard false
+  // or in short it stops dragging cards when mouse is released
   void mouseReleased() {
     
     // Gamble system
-     if (gamble.showGamble || gamble.showRecoveryPrompt || gamble.showMiniGame || gamble.showResultScreen) return; // block release actions
+if (gamble.showGamble || gamble.showRecoveryPrompt || gamble.showMiniGame || gamble.showDiceGame || gamble.showResultScreen) return; // block release actions
     
     
     
@@ -211,6 +245,7 @@ rect(width/2 - 200, height/2 + y, gamble.boxWidth, gamble.boxHeight);
     }
   }
   
+  // Detects mouse hovering over cards
   void mCollision() {
     boolean mPlayerCol = collision.mouseCollision(mouseX, mouseY, this.xPos, this.yPos, this.cardWidth, this.cardHeight);
     
@@ -272,6 +307,7 @@ rect(width/2 - 200, height/2 + y, gamble.boxWidth, gamble.boxHeight);
   }
   
   //Collision between cards
+  // Detects collisions between cards and placement zones
   void cCollision() {
     
     //Card Collision for other Cards like enemy card (WIP)
@@ -325,6 +361,7 @@ rect(width/2 - 200, height/2 + y, gamble.boxWidth, gamble.boxHeight);
 
 //----------------------------------------------------
 
+// Utility class for collision detection
 class Collision {
 //Credit to Manny for showing us his Collision class from his Platformer Demo game he made in Processing
 //Link: https://madmanapoints.itch.io/platformer-demo
@@ -377,7 +414,7 @@ interact with each other, and have the mouse interact with cards. */
 
 //----------------------------------------------------
 
-
+// Handles deck drawing, card generation, and redraw system
 class Deck {
 
   float deckXPos = 1050;
@@ -530,6 +567,7 @@ class Deck {
 
 //For special/unqiue cards
 //Mainly trying to make usable for anyone that wants to use it
+// Stores special effects and descriptions for cards
 class Effect {
   
   int cardChance = int(random(1,2));
@@ -555,6 +593,7 @@ class Effect {
   }
   
   // i dont believe this is being used atm
+  // Decides if a card becomes normal or special
   void cardStatus() {
     
     if (cardChance == 1) {
@@ -572,6 +611,7 @@ class Effect {
     }
   }
   
+  // Placeholder logic for special card effects
   void specialCard() {
     //I want this to choose at random if the special card damages or heals
     if  (specialCard == specialCardValue ) {
@@ -583,6 +623,7 @@ class Effect {
   
   }
   
+  // Placeholder logic for normal card behavior
   void normalCard() {
     //Have fucntionality where the card has attack damage values
   }
@@ -608,6 +649,7 @@ void run() {
 //----------------------------------------------------
 
 //Base class for Player-Based entities
+// Stores player stats and card values
 class Player {
 
   int playerHP = defaultHP;
@@ -622,6 +664,7 @@ class Player {
 }
 
 //Base for Enemies
+// Stores enemy stats and enemy turn behavior
 class Enemy {
   int enemyHP = defaultHP;
   int currentCardValue = 0;
@@ -632,6 +675,7 @@ class Enemy {
     currentCardValue = cardValue;
   }
 
+// Controls enemy actions during enemy turn
   void updateTurn() {
     if (!ts.playerTurn) {
       //Enemy Draws card
@@ -671,12 +715,14 @@ class Enemy {
 //------------------------------------------------
 
 //Timer, currently not being used
+// Simple timer system for turn timing
 class Timer {
   int currentTime = 0;
   int ellapsedMillis = 1000;
   int previousTime = 0;
   int timeLimit = 50; //Max 50 Seconds
  
+ // Updates timer every second
   void calcTime(){
     if (currentTime < timeLimit){  
       if (millis() - previousTime >= ellapsedMillis) {
@@ -694,6 +740,7 @@ class Timer {
 
 //possibly use enum
 int turnsPlayed;
+// Controls turn flow, attacks, and win/loss conditions
 class TurnSystem {
 
   boolean playerTurn = true;
@@ -707,6 +754,7 @@ class TurnSystem {
   TurnSystem() {
   }
 
+// Displays game over text on screen
   void gameOverDisplay() {
     textSize(200);
     stroke(0);
@@ -714,6 +762,7 @@ class TurnSystem {
     text(gameOverText, width/2, height/2, 100);
   }
 
+// Switches between player and enemy turns
   void endTurn() {
     //playerTurn = !playerTurn;
 
@@ -781,6 +830,7 @@ if (enemy.enemyHP <= 0) {
 
 //---------------------------------------------------
 
+// Handles all user interface elements and buttons
 class UI {
   PVector endTurnButton;
   float buttonRadius = 75;
@@ -793,12 +843,14 @@ class UI {
   {
     endTurnButton = pos;
   }
+ 
   //runs all the methods inside for the UI
   void run() {
     display();
     collision();
   }
 
+// Draws the card and updates drag movement
   void display() {
 
     // RESULT SCREEN
@@ -826,7 +878,7 @@ if (gamble.showResultScreen) {
 }
     
     
-    // MINI GAME
+    // MINI GAME FOR SPACE BAR SPAM
 if (gamble.showMiniGame) {
 
   background(50);
@@ -877,6 +929,36 @@ if (gamble.miniGameProgress >= gamble.miniGameGoal) {
   }
 }
     
+// =========================
+// DICE MINI GAME
+// =========================
+if (gamble.showDiceGame) {
+
+  dice.display();
+
+ // Keeps player inside of dice screen
+if (dice.finished) {
+
+  // WIN
+  if (dice.playerRoll > dice.enemyRoll) {
+
+    gamble.miniGameWon = true;
+  }
+
+  // LOSE
+  else if (dice.playerRoll < dice.enemyRoll) {
+
+    gamble.miniGameWon = false;
+  }
+
+  // DRAW
+  else {
+
+    gamble.miniGameWon = false;
+  }
+}
+} 
+    
     stroke(c);
     strokeWeight(sw);
     
@@ -898,6 +980,7 @@ if (gamble.miniGameProgress >= gamble.miniGameGoal) {
     fill(0);
   }
 
+// Detects mouse hovering over the end turn button
   void collision() {
     if (dist(mouseX, mouseY, endTurnButton.x, endTurnButton.y) < buttonRadius) {
       insideButton = true;
@@ -908,6 +991,7 @@ if (gamble.miniGameProgress >= gamble.miniGameGoal) {
     }
   }
 
+// Handles end turn button clicks
   void mouseClicked() {
     // for the end turn button
     if (insideButton == true)
@@ -919,6 +1003,7 @@ if (gamble.miniGameProgress >= gamble.miniGameGoal) {
     }
   }
 
+// Handles menu buttons, replay buttons, and result screens
   void mousePressed()
   {
    if (gamble.showResultScreen) {
@@ -962,6 +1047,7 @@ if (gameState == STATE_WIN || gameState == STATE_LOSE) {
   }
 }
 
+// Resets the full game state back to default
 void resetGame() {
   player = new Player();
   enemy = new Enemy();
@@ -982,6 +1068,7 @@ void resetGame() {
 
 //--------------------------------------------------
 
+// Handles player and enemy card placement zones
 class Zone {
   //player zone variables
   int playerZoneX, playerZoneY;
@@ -1008,16 +1095,20 @@ class Zone {
   
 //Method to be used in void setup(). 
 //Call both createPlayerZones() and createEnemyZones() to consolidate referencing in the main file
+ // Creates both player and enemy zones
   void createZones() {
     createPlayerZones();
     createEnemyZones();
   }
+  
+  // Draws all placement zones
   void zonesDisplay() {
     //displayed both zones in one method to reduce the number of referencing in the main file
     playerZoneDisplay();
     enemyZoneDisplay();
   }
 //displays zone for the player
+// Draws player card zones
   void playerZoneDisplay() {
     stroke(0);
     fill(0);
@@ -1040,6 +1131,7 @@ class Zone {
   }
   
 //displays zone for the enemy
+// Draws enemy card zones
   void enemyZoneDisplay() {
     stroke(0);
     fill(0);

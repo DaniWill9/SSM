@@ -5,6 +5,23 @@ TurnSystem ts;
 // Gamble System
 GambleSystem gamble;
 
+// Ziggy Dice Mini Game
+diceMG dice;
+
+// random mini game system
+boolean turnEnded, lastTurn, isFinish;
+
+// mini game generator
+final int Gamble_Chance = 0;
+final int Health_Regen = 1;
+final int Dice = 2;
+
+int currentGame = -2;
+
+// extra game state
+final int STATE_MINIGAME = 4;
+
+
 // game states to make things run smootly
 int gameState;
 
@@ -32,10 +49,18 @@ int defaultHP = 20, baseCardTotal = 5;
 
 int enemyCardValue = 0;
 
+// Initializes the game and all systems
 void setup() {
  
   // Gamble system for setup
   gamble = new GambleSystem();
+ 
+  // Ziggy dice setup
+  dice = new diceMG();
+
+  turnEnded = false;
+  lastTurn = false;
+  isFinish = false;
   
   pixelDensity(1);
   size(1500,1000);
@@ -86,6 +111,7 @@ void setup() {
   gameState = STATE_MENU;
 }
 
+// Main gameplay rendering and update loop
 void drawGame() {
   background(100);
   
@@ -135,6 +161,7 @@ void drawGame() {
   gamble.display(); // Gamble system 
 }
 
+// Draws the main menu screen
 void drawMenu() {
   background(50);
 
@@ -150,7 +177,7 @@ void drawMenu() {
   text("Press to Play", width/2, height/2 + 60);
 }
 
-// Win Screen 
+//Draws the  Win Screen 
 void drawWin() {
   background(0, 150, 255);
 
@@ -166,7 +193,7 @@ void drawWin() {
   text("Replay", width/2, height/2 + 60);
 }
 
-// Lose Screen 
+// Draws the Lose Screen 
 void drawLose() {
   background(150, 0, 0);
 
@@ -182,11 +209,23 @@ void drawLose() {
   text("Replay", width/2, height/2 + 60);
 }
 
+// Main Processing loop
 void draw() {
+
   drawGame();
 
+  // trigger random mini games
+  if (turnEnded && !lastTurn && gameState == STATE_PLAY) {
+    randomGameSelector();
+    turnEnded = false;
+  }
+
+  lastTurn = turnEnded;
+
+  
 }
 
+// Handles all mouse press interactions
 void mousePressed() {
   //allows the deck to be pressed
   playerDeck.mousePressed();
@@ -216,7 +255,11 @@ void mousePressed() {
 }
 //allows the end turn button to be clicked
 void mouseClicked() {
+  
   ui.mouseClicked();
+  
+  // trigger random mini game after turn
+  turnEnded = true;
 }
 // turns the card you are holding to not be dragged anymore
 void mouseReleased(){
@@ -234,7 +277,18 @@ void mouseDragged() {
   
 
 }
+
+// Handles keyboard input for mini games
 void keyPressed(){
+  
+ 
+  // DICE MINI GAME INPUT
+if (gamble.showDiceGame) {
+
+  dice.keyPressed();
+
+  return;
+}
 
   for (int i = 0; i < defaultCard.size(); i++){
     //Card dC = defaultCard.get(i);
@@ -250,7 +304,7 @@ if (gamble.showMiniGame && key == ' ') {
 
     gamble.spaceHeld = true;
 
-    gamble.miniGameProgress += 2;  // 2 is do able but can make it harder or not
+    gamble.miniGameProgress += 2;
 
     // clamp progress
     if (gamble.miniGameProgress > gamble.miniGameGoal) {
@@ -262,9 +316,24 @@ if (gamble.showMiniGame && key == ' ') {
   
 }
 
+// Detects when keys are released
 void keyReleased() {
 
   if (key == ' ') {
     gamble.spaceHeld = false;
   }
+}
+
+// Randomly selects a mini game
+void randomGameSelector(){
+
+ currentGame = int(random(0,3));
+
+ // START MINI GAME STATE
+ gameState = STATE_MINIGAME;
+
+ // reset dice game
+ if(currentGame == Dice){
+    dice = new diceMG();
+ }
 }

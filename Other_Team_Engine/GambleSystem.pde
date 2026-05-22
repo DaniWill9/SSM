@@ -3,6 +3,7 @@ int minigameYOffset = 150; // change this number to move it up/down for mini gam
 int y = minigameYOffset;
 
 // gamble system
+// Handles gamble events, recovery prompts, and mini games
 class GambleSystem {
 
   boolean spaceHeld = false;
@@ -17,6 +18,7 @@ class GambleSystem {
   boolean showRecoveryPrompt = false;  // asks player if they want to recover HP
   boolean showMiniGame = false;        // shows spam spacebar minigame
   boolean showResultScreen = false;    // shows win/lose result
+  boolean showDiceGame = false;        // shows dice minigame
 
  // MINI GAME VALUES
 int miniGameProgress = 0; // how full the bar is
@@ -27,12 +29,15 @@ int miniGameTimeLimit = 10 * 60; // time limit for bar/ 10 seconds (60 FPS)
 
   boolean miniGameWon = false; // result of mini game
 
+int selectedMiniGame = 0;
+
   // called when battle happens
   void trigger() {
     showGamble = true;  // open gamble screen
     gambleResolved = false;
   }
 
+// Draws gamble UI and buttons
   void display() {
     if (!showGamble) return; // don't draw if not active
 
@@ -62,6 +67,7 @@ int miniGameTimeLimit = 10 * 60; // time limit for bar/ 10 seconds (60 FPS)
     text("NO", width/2 + 125, height/2 + 45 + yOffset);
   }
 
+// Detects gamble button clicks
   void mousePressed() {
     if (!showGamble) return;
 
@@ -79,7 +85,7 @@ int miniGameTimeLimit = 10 * 60; // time limit for bar/ 10 seconds (60 FPS)
       showGamble = false;
     }
   }
-
+// Randomly decides gamble outcome
   void resolveGamble() {
 
   // number from 0 to 99
